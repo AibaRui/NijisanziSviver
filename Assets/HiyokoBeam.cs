@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BookMove : MonoBehaviour
+public class HiyokoBeam : MonoBehaviour
 {
     [SerializeField] float _lifeTime = 5;
     float _countTime = 0;
@@ -22,7 +22,7 @@ public class BookMove : MonoBehaviour
     float _angularVelocity;
     Vector2 _velocity;
 
-
+    InstantiateHiyoko _hiyoko;
 
     Rigidbody2D _rb;
     AudioSource _aud;
@@ -33,13 +33,12 @@ public class BookMove : MonoBehaviour
     private void Awake()
     {
         _pauseManager = GameObject.FindObjectOfType<PauseManager>();
-        _mainStatas = FindObjectOfType<MainStatas>();
-        _boockWeapon = GameObject.FindObjectOfType<InstantiateBoock>();
-        _period = _boockWeapon._period;
+        _hiyoko = GameObject.FindObjectOfType<InstantiateHiyoko>();
+        _period = _hiyoko._period;
+
         _player = GameObject.FindGameObjectWithTag("Player");
         _center = _player.transform.position;
     }
-
 
 
     void Update()
@@ -50,7 +49,8 @@ public class BookMove : MonoBehaviour
 
             if (_countTime >= _lifeTime)
             {
-                    Destroy(gameObject);
+
+                Destroy(this.gameObject);
             }
         }
     }
@@ -63,25 +63,26 @@ public class BookMove : MonoBehaviour
     void Move()
     {
         if (!_isLevelUpPause && !_isPause)
-        {
-            //     _player =  GameObject.FindGameObjectWithTag("Player");
-            _center = _player.transform.position;
+        {    
+            //transform.right = transform.parent.position;
+            ////     _player =  GameObject.FindGameObjectWithTag("Player");
+            //_center = transform.parent.position;
 
-            var tr = transform;
-            // 回転のクォータニオン作成
-            var angleAxis = Quaternion.AngleAxis(360 / _period * Time.deltaTime, transform.parent.forward);
+            //var tr = transform;
+            //// 回転のクォータニオン作成
+            //var angleAxis = Quaternion.AngleAxis(360 / _period * Time.deltaTime, transform.parent.forward);
 
-            // 円運動の位置計算
-            var pos = tr.position;
+            //// 円運動の位置計算
+            //var pos = tr.position;
 
-            pos -= _center;
-            pos = angleAxis * pos.normalized * 2.2f;
-            pos += _center;
+            //pos -= _center;
+            //pos = angleAxis * pos.normalized * 5f;
+            //pos += _center;
 
-            tr.position = pos;
+            //tr.position = pos;
+            //tr.rotation = tr.rotation * angleAxis;
         }
     }
-
 
     void OnDisable()
     {

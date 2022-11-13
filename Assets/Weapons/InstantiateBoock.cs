@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoockWeapon : WeaponBase
+public class InstantiateBoock : InstantiateWeaponBase
 {
     List<GameObject> go = new List<GameObject>();
 
@@ -21,16 +21,19 @@ public class BoockWeapon : WeaponBase
 
     void Update()
     {
-        _period = _speed;
-        if (_level > 0)
+        if (!_isLevelUpPause && !_isLevelUpPause)
         {
-            if (_isAttack && _isAttackNow == false)
+            _period = _speed;
+            if (_level > 0)
             {
-                StartCoroutine(Attack());
-            }
-            else if (!_isAttack)
-            {
-                AttackLate();
+                if (_isAttack && _isAttackNow == false)
+                {
+                    StartCoroutine(Attack());
+                }
+                else if (!_isAttack)
+                {
+                    AttackLate();
+                }
             }
         }
     }
@@ -66,10 +69,28 @@ public class BoockWeapon : WeaponBase
         }
 
         yield return new WaitForSeconds(5);
-        go.ForEach(i => Destroy(i));
         _isAttack = false;
         _isAttackNow = false;
     }
 
+    public override void LevelUpPause()
+    {
+        _isLevelUpPause = true;
+    }
 
+    public override void LevelUpResume()
+    {
+        _isLevelUpPause = false;
+
+    }
+
+    public override void Pause()
+    {
+        _isPause = true;
+    }
+
+    public override void Resume()
+    {
+        _isPause = false;
+    }
 }

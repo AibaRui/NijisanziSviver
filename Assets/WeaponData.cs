@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WEaponManger : MonoBehaviour
+public class WeaponData : MonoBehaviour
 {
     /// <summary>レベルアップテーブルが CSV 形式で格納されているテキスト</summary>
     [SerializeField] TextAsset[] _levelUpTable = new TextAsset[1];
