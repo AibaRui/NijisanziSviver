@@ -7,8 +7,16 @@ using UnityEngine;
 public class ExperiencePointData : ScriptableObject
 {
     /// <summary>経験値の量</summary>
-    public float _expPoint;
+    [SerializeField] int _expPoint;
 
-    /// <summary>経験値のイラスト</summary>
-    public SpriteRenderer _sprite;
+    public int ExpPoint { get => _expPoint; }
+
+    private GameObject _player;
+
+    public GameObject Player { get => _player; set => _player = value; }
+
+    LevelUpController _levelUpController;
+
+    public LevelUpController LevelUpController { get => _levelUpController; set => _levelUpController = value; }
+
 }
