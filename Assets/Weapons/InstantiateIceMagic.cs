@@ -2,15 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InstantiateIceMagic : InstantiateWeaponBase
+public class InstantiateIceMagic : InstantiateWeaponBase//,IPausebleGetBox
 {
+    [SerializeField] float _spownAddPos = 4;
+
     bool _isAttack = false;
     bool _isAttackNow = false;
 
     /// <summary>一回の攻撃で出す武器を、出し終えたかどうか</summary>
     bool _isInstanciateEnd = true;
 
-    IEnumerator _instanciateCorutine;
+    [SerializeField] GameObject _playerSprite;
 
     void Start()
     {
@@ -20,14 +22,14 @@ public class InstantiateIceMagic : InstantiateWeaponBase
 
     void Update()
     {
-        if (!_isLevelUpPause && !_isLevelUpPause)
+        if (!_isLevelUpPause && !_isPause && !_isPauseGetBox)
         {
             if (_level > 0)
             {
                 if (_isAttack)
                 {
-                    _instanciateCorutine = Attack();
-                    StartCoroutine(Attack());
+                    _instantiateCorutin = Attack();
+                    StartCoroutine(_instantiateCorutin);
                 }
                 else if (_isInstanciateEnd)
                 {
@@ -46,6 +48,7 @@ public class InstantiateIceMagic : InstantiateWeaponBase
             var setCoolTime = _coolTime * _mainStatas.CoolTime;
             _countTime = setCoolTime;
             _isAttack = true;
+            _isInstanciateEnd = false;
         }
     }
 
@@ -53,71 +56,49 @@ public class InstantiateIceMagic : InstantiateWeaponBase
     {
         //_isAttackNow = true;
         _isAttack = false;
-        if (_number > 2) _number = 2;
+ 
+        var num = _number + _mainStatas.Number;
 
-        for (int i = 0; i < _number; i++)
+        for (int i = 0; i < num; i++)
         {
-            var go = Instantiate(_weaponObject);
-            if(i==0)
-            {
-                Vector3 pos = new Vector3(-2, 0,0);
-                go.transform.localScale = new Vector3(-1, 1, 1);
-                go.transform.position = _player.transform.position+pos;
-            }
-            else
-            {
-                Vector3 pos = new Vector3(2, 0, 0);
-                go.transform.position = _player.transform.position + pos;
-            }
+            SpownIce(i, _playerSprite.transform.localScale.x);
+
             yield return new WaitForSeconds(0.1f);
         }
         // _isAttackNow = false;
         _isInstanciateEnd = true;
-        _instanciateCorutine = null;
+        _instantiateCorutin = null;
     }
 
-    public override void LevelUpPause()
+
+    private void SpownIce(int i, float playerLocalX)
     {
-        _isLevelUpPause = true;
-        if (_instanciateCorutine != null)
+        var go = _objectPool.UseObject(_player.transform.position, PoolObjectType.IceMagick);
+
+        if (i % 2 == 0)
         {
-            StopCoroutine(_instanciateCorutine);
+            Vector3 pos = default;
+
+            if (i == 0) pos = new Vector3(-_spownAddPos, 0, 0);
+            else pos = new Vector3(-_spownAddPos * i, 0, 0);
+
+            go.transform.position = _playerSprite.transform.position + pos;
+            go.gameObject.GetComponent<WeaponBase>().Power = _attackPower * _mainStatas.Power;
+            go.gameObject.transform.localScale = new Vector3(-_mainStatas.Eria * _eria, _mainStatas.Eria * _eria, 1);
         }
+        else if (i % 2 != 0)
+        {
+            Vector3 pos = default;
+
+            if (i == 0) pos = new Vector3(_spownAddPos, 0, 0);
+            else pos = new Vector3(_spownAddPos * i, 0, 0);
+
+            go.transform.position = _playerSprite.transform.position + pos;
+            go.gameObject.GetComponent<WeaponBase>().Power = _attackPower * _mainStatas.Power;
+            go.gameObject.transform.localScale = new Vector3(_mainStatas.Eria * _eria, _mainStatas.Eria * _eria, 1);
+        }
+
     }
 
-    public override void LevelUpResume()
-    {
-        _isLevelUpPause = false;
-
-        if (_instanciateCorutine != null)
-        {
-            StartCoroutine(_instanciateCorutine);
-        }
-    }
-
-    public override void Pause()
-    {
-        _isPause = true;
-        if (!_isLevelUpPause)
-        {
-            if (_instanciateCorutine != null)
-            {
-                StopCoroutine(_instanciateCorutine);
-            }
-        }
-    }
-
-    public override void Resume()
-    {
-        _isPause = false;
-
-        if (!_isLevelUpPause)
-        {
-            if (_instanciateCorutine != null)
-            {
-                StartCoroutine(_instanciateCorutine);
-            }
-        }
-    }
-
+   
 }

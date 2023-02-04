@@ -1,0 +1,4 @@
+Name,AttackPower,AttackSpeed,Number,AttackEria,CoolTime,MaxHp,Dex,MoveSpeed,Exp,GetEria
+GetEriaUp1,0,0,0,0,0,0,0,0,0,1.1
+GetEriaUp2,0,0,0,0,0,0,0,0,0,1.2
+GetEriaUp3,0,0,0,0,0,0,0,0,0,1.2

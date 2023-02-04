@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InstantiateKnife : InstantiateWeaponBase
+public class InstantiateKnife : InstantiateWeaponBase//,IPausebleGetBox
 {
     /// <summary>攻撃可能かどうか</summary>
     bool _isAttack = false;
@@ -11,19 +11,22 @@ public class InstantiateKnife : InstantiateWeaponBase
     bool _isInstanciateEnd = true;
 
     /// <summary>ナイフを飛ばす向きのベクトル</summary>
-    Vector2 dirSave　=new Vector2(1, 0);
+    Vector2 dirSave = new Vector2(1, 0);
 
-    IEnumerator _instanciateCorutineKnife;
 
     void Start()
     {
+        
         _player = GameObject.FindGameObjectWithTag("Player");
         _weaponManager = FindObjectOfType<WeaponData>();
     }
 
     void Update()
     {
-        if (!_isLevelUpPause && !_isPause)
+        if (_level == 0) return;
+
+        //一時停止中でなかったら実行
+        if (!_isLevelUpPause && !_isPause && !_isPauseGetBox)
         {
             float h = Input.GetAxisRaw("Horizontal");
             float v = Input.GetAxisRaw("Vertical");
@@ -33,23 +36,21 @@ public class InstantiateKnife : InstantiateWeaponBase
                 dirSave = dir;
             }
 
-            
-            if (_level > 0)
-            {
 
-                if (_isAttack)
-                {
-                    _instanciateCorutineKnife = Attack();
-                    StartCoroutine(_instanciateCorutineKnife);
-                }
-                else if (_isInstanciateEnd)
-                {
-                    AttackLate();
-                }
+            if (_isAttack)
+            {
+                _instantiateCorutin = Attack();
+                StartCoroutine(_instantiateCorutin);
             }
+            else if (_isInstanciateEnd)
+            {
+                AttackLate();
+            }
+
         }
     }
 
+    /// <summary>クールタイムの処理</summary>
     void AttackLate()
     {
         _countTime -= Time.deltaTime;
@@ -58,14 +59,16 @@ public class InstantiateKnife : InstantiateWeaponBase
         {
             var setCoolTime = _coolTime * _mainStatas.CoolTime;
             _countTime = setCoolTime;
+            _isInstanciateEnd = false;
             _isAttack = true;
         }
     }
 
+    /// <summary>攻撃の処理</summary>
+    /// <returns></returns>
     IEnumerator Attack()
     {
         _isAttack = false;
-        _isInstanciateEnd = false;
 
         //武器を出す回数を決める。(武器のステータスと、メインステータスの合計値)
         var num = _number + _mainStatas.Number;
@@ -75,60 +78,49 @@ public class InstantiateKnife : InstantiateWeaponBase
             float randamX = Random.Range(0.2f, 1);
             float randamY = Random.Range(-1.3f, 1.3f);
 
-            var go = Instantiate(_weaponObject);
+            var go = _objectPool.UseObject(_player.transform.position, PoolObjectType.Knife);
             go.transform.position = _player.transform.position + new Vector3(randamX, randamY, 0);
             go.transform.up = dirSave;
+            go.gameObject.GetComponent<WeaponBase>().Power = _attackPower * _mainStatas.Power;
+            go.gameObject.GetComponent<WeaponBase>().Level = _level;
             Rigidbody2D rb = go.GetComponent<Rigidbody2D>();
-            rb.velocity = dirSave * _speed * _mainStatas.Speed;
-
+            rb.velocity = dirSave * _speed * _mainStatas.AttackSpeed;
+            _aud.Play();
             yield return new WaitForSeconds(0.2f);
         }
         _isInstanciateEnd = true;
-        _instanciateCorutineKnife = null;
+        _instantiateCorutin = null;
     }
 
-    public override void LevelUpPause()
-    {
-        _isLevelUpPause = true;
-        if (_instanciateCorutineKnife != null)
-        {
-            StopCoroutine(_instanciateCorutineKnife);
-        }
-    }
 
-    public override void LevelUpResume()
-    {
-        _isLevelUpPause = false;
+    //private void OnEnable()
+    //{
+    //    //  _weaponManager = FindObjectOfType<WeaponData>();
+    //}
 
-        if (_instanciateCorutineKnife != null)
-        {
-            StartCoroutine(_instanciateCorutineKnife);
-        }
-    }
 
-    public override void Pause()
-    {
-        _isPause = true;
-        if (!_isLevelUpPause)
-        {
-            if (_instanciateCorutineKnife != null)
-            {
-                StopCoroutine(_instanciateCorutineKnife);
-            }
-        }
-    }
+    //private void OnDisable()
+    //{
+    //    PauseGetBox.Instance.RemoveEvent(this);
+    //}
 
-    public override void Resume()
-    {
-        _isPause = false;
+    //public void PauseResume(bool isPause)
+    //{
+    //    _isPauseGetBox = isPause;
 
-        if (!_isLevelUpPause)
-        {
-            if (_instanciateCorutineKnife != null)
-            {
-                StartCoroutine(_instanciateCorutineKnife);
-            }
-        }
-    }
-
+    //    if(isPause)
+    //    {
+    //        if (_instantiateCorutin != null)
+    //        {
+    //            StopCoroutine(_instantiateCorutin);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if (_instantiateCorutin != null)
+    //        {
+    //            StartCoroutine(_instantiateCorutin);
+    //        }
+    //    }
+    //}
 }

@@ -1,0 +1,4 @@
+Name,AttackPower,AttackSpeed,Number,AttackEria,CoolTime,MaxHp,Dex,MoveSpeed,Exp,GetEria
+RandomStatsUp1,0.1,0.1,1,0.1,0.1,0.1,0.1,0.1,0.1,0.1
+RandomStatsUp2,0.2,0.2,1,0.2,0.1,0.2,0.2,0.2,0.2,0.1
+RandomStatsUp3,0.3,0.3,2,0.3,0.1,0.3,0.3,0.3,0.3,0.1

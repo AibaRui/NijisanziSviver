@@ -2,157 +2,79 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BookMove : MonoBehaviour
+public class BookMove : WeaponBase
 {
-    [SerializeField] float _lifeTime = 5;
-    float _countTime = 0;
-
-
     // 円運動周期(+と-で回転方向が変わる)
     private float _period = 2;
+    public float Period { set => _period = value; }
 
-    MainStatas _mainStatas;
+   private float _radius;
 
-    InstantiateBoock _boockWeapon;
+    public float Radius { set => _radius = value; }
+
     GameObject _player;
     Vector3 _center;
-    protected bool _isPause = false;
-    protected bool _isLevelUpPause = false;
 
-    float _angularVelocity;
-    Vector2 _velocity;
-
-
-
-    Rigidbody2D _rb;
-    AudioSource _aud;
-    Animator _anim;
-
-    PauseManager _pauseManager = default;
+    public Vector3 Center { set => _center = value; }
 
     private void Awake()
     {
-        _pauseManager = GameObject.FindObjectOfType<PauseManager>();
-        _mainStatas = FindObjectOfType<MainStatas>();
-        _boockWeapon = GameObject.FindObjectOfType<InstantiateBoock>();
-        _period = _boockWeapon._period;
-        _player = GameObject.FindGameObjectWithTag("Player");
-        _center = _player.transform.position;
+        _player = GameObject.FindGameObjectWithTag("Player");  
+        //回転の中心点をプレイヤーの位置に設定
     }
 
 
 
     void Update()
     {
-        if (!_isPause && !_isLevelUpPause)
+        if (!_isPause && !_isLevelUpPause && !_isPauseGetBox)
         {
-            _countTime += Time.deltaTime;
-
-            if (_countTime >= _lifeTime)
-            {
-                    Destroy(gameObject);
-            }
+            CountDestroyTime();        
         }
     }
 
     void FixedUpdate()
     {
-        Move();
+        if (!_isPause && !_isLevelUpPause && !_isPauseGetBox)
+        {
+            Move();
+        }
+
     }
 
     void Move()
     {
         if (!_isLevelUpPause && !_isPause)
         {
-            //     _player =  GameObject.FindGameObjectWithTag("Player");
             _center = _player.transform.position;
 
             var tr = transform;
-            // 回転のクォータニオン作成
-            var angleAxis = Quaternion.AngleAxis(360 / _period * Time.deltaTime, transform.parent.forward);
+
+            // 回転のクォータニオン作成。
+            // Quaternion.AngleAxis(何度回転させるか,回転軸)
+            // 指定された角度と軸での回転を表すクォータニオンを取得するメソッド
+            var angleAxis = Quaternion.AngleAxis(360 / _period*Time.deltaTime, Vector3.forward);
 
             // 円運動の位置計算
             var pos = tr.position;
 
             pos -= _center;
-            pos = angleAxis * pos.normalized * 2.2f;
+
+            pos = angleAxis * pos.normalized*_radius;
             pos += _center;
 
             tr.position = pos;
         }
     }
 
-
-    void OnDisable()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        // OnDisable ではメソッドの登録を解除すること。さもないとオブジェクトが無効にされたり破棄されたりした後にエラーになってしまう。
-        _pauseManager.OnPauseResume -= PauseResume;
-        _pauseManager.OnPauseResume -= LevelUpPauseResume;
-    }
-
-    void PauseResume(bool isPause)
-    {
-        if (isPause)
+        if (collision.gameObject.tag == "Enemy")
         {
-            Pause();
-        }
-        else
-        {
-            Resume();
+            if (collision.gameObject.TryGetComponent<EnemyControl>(out EnemyControl enemy))
+            {
+                enemy.Damage(_power);
+            }
         }
     }
-
-    void LevelUpPauseResume(bool isPause)
-    {
-        if (isPause)
-        {
-            LevelUpPause();
-        }
-        else
-        {
-            LevelUpResume();
-        }
-    }
-
-    public void LevelUpPause()
-    {
-        _isLevelUpPause = true;
-    }
-
-    public void LevelUpResume()
-    {
-        _isLevelUpPause = false;
-    }
-
-    public void Pause()
-    {
-        _isPause = true;
-        // 速度・回転を保存し、Rigidbody を停止する
-        _angularVelocity = _rb.angularVelocity;
-        _velocity = _rb.velocity;
-        _rb.Sleep();
-        _rb.isKinematic = true;
-
-        if (_anim)
-        {
-            _anim.enabled = false;
-        }
-    }
-
-    public void Resume()
-    {
-        _isPause = false;
-        // Rigidbody の活動を再開し、保存しておいた速度・回転を戻す
-        _rb.WakeUp();
-        _rb.angularVelocity = _angularVelocity;
-        _rb.velocity = _velocity;
-        _rb.isKinematic = false;
-
-        if (_anim)
-        {
-            _anim.enabled = true;
-        }
-
-    }
-
 }

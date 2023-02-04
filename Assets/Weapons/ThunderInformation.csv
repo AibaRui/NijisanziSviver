@@ -1,9 +1,8 @@
 Name,InforMation
-Thunder1,フラスコの爆弾を投げる
-Thunder2,威力が上がる
-Thunder3,発射速度が上がる
-Thunder4,発射物が1つ増える
-Thunder5,威力が上がる
-Thunder6,発射速度が上がる
-Thunder7,強くなる
-Thunder8,なんかとても強い
+Thunder1,落雷を2つ自身の周辺にランダムに落とす
+Thunder2,攻撃力が25%上がる
+Thunder3,クールタイムが30%早くなる
+Thunder4,落雷が1つ増える
+Thunder5,攻撃力が25%上がる
+Thunder6,クールタイムが30%早くなる
+Thunder7,落雷が1つ増える

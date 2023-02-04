@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8723902124227320949}
   - component: {fileID: 684474300658941571}
   - component: {fileID: 682946538070253292}
-  - component: {fileID: 5730803810995530547}
+  - component: {fileID: -2571485016104809114}
   m_Layer: 0
   m_Name: Thunder
   m_TagString: Untagged
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 20
   m_Sprite: {fileID: 537869512, guid: 110dd9d1d00f4124b8d48adab737ca95, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -133,7 +133,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
---- !u!114 &5730803810995530547
+--- !u!114 &-2571485016104809114
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,8 +142,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3279124995066833969}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6539980dde7310e42aa88db2c992b4e0, type: 3}
+  m_Script: {fileID: 11500000, guid: d6c8ab2fa535fa144a3d675caaad71fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _lifeTime: 0.4
-  _isDestroy: 1

@@ -2,15 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 public abstract class InstantiateWeaponBase : MonoBehaviour
 {
-    
-    [Header("武器のオブジェクト")]
-    [Tooltip("武器のオブジェクト")] [SerializeField] protected GameObject _weaponObject;
+    [SerializeField] GameObject _iconUseUI;
+
+    [SerializeField] GameObject _iconUseBox;
+
+    [SerializeField] GameObject _panel;
+
+    [Header("レベルアップ画面のレイアウトグループ")]
+    [Tooltip("レベルアップ画面のレイアウトグループ")] [SerializeField] LayoutGroup _basePanelLayoutGroup;
+
+    [Header("ゲーム画面のレイアウトグループ")]
+    [Tooltip("ゲーム画面のレイアウトグループ")] [SerializeField] LayoutGroup _gameSceneLayoutGroup;
+
 
     [Header("武器の名前")]
     [Tooltip("武器の名前")] [SerializeField] protected string _weaponName = "";
+
+    [Header("武器の最大レベル")]
+    [Tooltip("武器の最大レベル")] [SerializeField] protected int _maxLevel = 0;
 
     [Header("火力")]
     [Tooltip("火力")] [SerializeField] protected float _attackPower;
@@ -27,16 +40,21 @@ public abstract class InstantiateWeaponBase : MonoBehaviour
     [Header("武器を出す数")]
     [Tooltip("武器を出す数")] [SerializeField] protected int _number;
 
-   protected MainStatas _mainStatas;
-    
+
+    protected MainStatas _mainStatas;
+
     /// <summary>レベルアップテーブルを読み込むため</summary>
     protected WeaponData _weaponManager = default;
 
+    [SerializeField] LevelUpController _levelUpController;
+
+     [SerializeField] BoxControl _boxControl;
+
+    [SerializeField] protected ObjectPool _objectPool;
     /// <summary>武器のレベル</summary>
     protected int _level = 0;
 
-    [Header("武器の最大レベル")]
-    [Tooltip("武器の最大レベル")] [SerializeField] protected int _maxLevel = 0;
+
 
     /// <summary>プレイヤーのパラメーター</summary>
     public WeaponStats _weaponStats = default;
@@ -50,15 +68,30 @@ public abstract class InstantiateWeaponBase : MonoBehaviour
 
     protected bool _isPause = false;
     protected bool _isLevelUpPause = false;
+    protected bool _isPauseGetBox = false;
 
     Animator _anim;
+  protected  AudioSource _aud;
 
+    protected IEnumerator _instantiateCorutin;
 
     PauseManager _pauseManager = default;
     private void Awake()
     {
-        _mainStatas = FindObjectOfType<MainStatas>();   
+        
+        _aud = GetComponent<AudioSource>();
+        _levelUpController.SetWeaponData(_weaponName, _maxLevel, _iconUseBox, _panel, _iconUseUI);
+        _boxControl.SetWeapon(_weaponName, this);
+        _mainStatas = FindObjectOfType<MainStatas>();
         _pauseManager = GameObject.FindObjectOfType<PauseManager>();
+    }
+
+    private void SetIcon()
+    {
+        var go = Instantiate(_iconUseUI);
+        var go2 = Instantiate(_iconUseUI);
+        go.transform.SetParent(_basePanelLayoutGroup.transform);
+        go2.transform.SetParent(_gameSceneLayoutGroup.transform);
     }
 
     /// <summary>
@@ -68,22 +101,24 @@ public abstract class InstantiateWeaponBase : MonoBehaviour
     public void LevelUp(int level = 1)
     {
         _weaponManager = FindObjectOfType<WeaponData>();
-        if (_level < _maxLevel)
-        {
-            _level += level;
-            _weaponStats = _weaponManager.GetData(_level, _weaponName);
 
-            _attackPower = _weaponStats.Power;
-            _coolTime = _weaponStats.CoolTime;
-            _eria = _weaponStats.Eria;
-            _speed = _weaponStats.Speed;
-            _number = _weaponStats.Number;
+        _level += level;
 
-            Debug.Log(_weaponName + "レベルアップ！現在のレベルは" + _level);
-        }
-        GameManager gm = FindObjectOfType<GameManager>();
-        gm.WeaponLevelUp(_weaponName,_level);
+        _weaponStats = _weaponManager.GetData(_level, _weaponName);
+
+        _attackPower = _weaponStats.Power;
+        _coolTime = _weaponStats.CoolTime;
+        _eria = _weaponStats.Eria;
+        _speed = _weaponStats.Speed;
+        _number = _weaponStats.Number;
+
+        Debug.Log(_weaponName + "レベルアップ！現在のレベルは" + _level);
+        _levelUpController.WeaponLevelUp(_weaponName, _level);
     }
+
+
+
+    // protected abstract void SetPower();
 
 
     ///////Parse処理/////
@@ -127,13 +162,50 @@ public abstract class InstantiateWeaponBase : MonoBehaviour
         }
     }
 
-    public abstract void LevelUpPause();
+    void LevelUpPause()
+    {
+        if (!_isPauseGetBox)
+        {
+            _isLevelUpPause = true;
+            if (_instantiateCorutin != null)
+            {
+                StopCoroutine(_instantiateCorutin);
+            }
+        }
+    }
 
+    public void LevelUpResume()
+    {
+        _isLevelUpPause = false;
 
-    public abstract void LevelUpResume();
+        if (_instantiateCorutin != null)
+        {
+            StartCoroutine(_instantiateCorutin);
+        }
+    }
 
+    public void Pause()
+    {
+        _isPause = true;
+        if (!_isLevelUpPause && !_isPauseGetBox)
+        {
+            if (_instantiateCorutin != null)
+            {
+                StopCoroutine(_instantiateCorutin);
+            }
+        }
+    }
 
-    public abstract void Pause();
+    public void Resume()
+    {
+        _isPause = false;
 
-    public abstract void Resume(); 
+        if (!_isLevelUpPause && !_isPauseGetBox)
+        {
+            if (_instantiateCorutin != null)
+            {
+                StartCoroutine(_instantiateCorutin);
+            }
+        }
+    }
 }

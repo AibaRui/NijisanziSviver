@@ -11,7 +11,8 @@ public class PlayerMove : MonoBehaviour
     [Tooltip("プレイヤーのスプライト")] [SerializeField] GameObject _playerSprite ;
 
 
-    [SerializeField] Animator _anim;
+    private Animator _anim;
+    public Animator Anim { get => _anim; set => value = _anim; }
     Rigidbody2D _rb;
     void Start()
     {
@@ -20,12 +21,8 @@ public class PlayerMove : MonoBehaviour
     }
 
 
-    void Update()
-    {
-        Move();
-    }
 
-    private void Move()
+    public void Move()
     {
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");

@@ -1,9 +1,8 @@
 Name,InforMation
-IceMagic1,フラスコの爆弾を投げる
-IceMagic2,威力が上がる
-IceMagic3,発射速度が上がる
-IceMagic4,発射物が1つ増える
-IceMagic5,威力が上がる
-IceMagic6,発射速度が上がる
-IceMagic7,強い
-IceMagic8,なんかとても強い
+IceMagic1,氷柱を自身の前後に打ち出す
+IceMagic2,氷柱の攻撃力が40%上がる
+IceMagic3,攻撃範囲が30%上がる
+IceMagic4,氷柱を前後に、計4つ打ち出す
+IceMagic5,クールタイムが30%短くなる
+IceMagic6,氷柱の攻撃力が40%上がる
+IceMagic7,氷柱を前後に、計6つ打ち出す

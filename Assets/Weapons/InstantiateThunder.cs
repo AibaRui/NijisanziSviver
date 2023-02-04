@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InstantiateThunder : InstantiateWeaponBase
+public class InstantiateThunder : InstantiateWeaponBase//,IPausebleGetBox
 {
     /// <summary>雷を落とす範囲の半径X</summary>
     [SerializeField] float _sizeX;
@@ -15,7 +15,6 @@ public class InstantiateThunder : InstantiateWeaponBase
     /// <summary>一回の攻撃で出す武器を、出し終えたかどうか</summary>
     bool _isInstanciateEnd = true;
 
-    IEnumerator _instanciateCorutineThunder;
 
     void Start()
     {
@@ -25,15 +24,15 @@ public class InstantiateThunder : InstantiateWeaponBase
 
     void Update()
     {
-        if (!_isLevelUpPause && !_isPause)
+        if (!_isLevelUpPause && !_isPause && !_isPauseGetBox)
         {
             if (_level > 0)
             {
 
                 if (_isAttack)
                 {
-                    _instanciateCorutineThunder = Attack();
-                    StartCoroutine(_instanciateCorutineThunder);
+                    _instantiateCorutin = Attack();
+                    StartCoroutine(_instantiateCorutin);
                 }
                 else if (_isInstanciateEnd)
                 {
@@ -68,56 +67,14 @@ public class InstantiateThunder : InstantiateWeaponBase
             float randamX = Random.Range(-_sizeX, _sizeX);
             float randamY = Random.Range(-_sizeY, _sizeY);
 
-            var go = Instantiate(_weaponObject);
+            var go = _objectPool.UseObject(_player.transform.position, PoolObjectType.Thunder);
             go.transform.position = _player.transform.position + new Vector3(randamX, randamY, 0);
+            go.gameObject.GetComponent<WeaponBase>().Power = _attackPower * _mainStatas.Power;
             yield return new WaitForSeconds(0.2f);
         }
         _isInstanciateEnd = true;
-        _instanciateCorutineThunder = null;
+        _instantiateCorutin = null;
     }
 
-    public override void LevelUpPause()
-    {
-        _isLevelUpPause = true;
-        if (_instanciateCorutineThunder != null)
-        {
-            StopCoroutine(_instanciateCorutineThunder);
-        }
-    }
-
-    public override void LevelUpResume()
-    {
-        _isLevelUpPause = false;
-
-        if (_instanciateCorutineThunder != null)
-        {
-            StartCoroutine(_instanciateCorutineThunder);
-        }
-    }
-
-    public override void Pause()
-    {
-        _isPause = true;
-        if (!_isLevelUpPause)
-        {
-            if (_instanciateCorutineThunder != null)
-            {
-                StopCoroutine(_instanciateCorutineThunder);
-            }
-        }
-    }
-
-    public override void Resume()
-    {
-        _isPause = false;
-
-        if (!_isLevelUpPause)
-        {
-            if (_instanciateCorutineThunder != null)
-            {
-                StartCoroutine(_instanciateCorutineThunder);
-            }
-        }
-    }
-
+   
 }

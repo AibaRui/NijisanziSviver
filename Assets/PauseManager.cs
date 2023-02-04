@@ -26,7 +26,20 @@ public class PauseManager : MonoBehaviour
     LevelUp _onLevelUp = default;
 
 
+    public bool _isGetBox = false;
+    /// <summary>true の時は一時停止とする</summary>
+    bool _getBoxFlg = false;
+    /// <summary>一時停止・再開を制御する関数の型（デリゲート）を定義する</summary>
+    public delegate void GetBox(bool isPause);
+    /// <summary>デリゲートを入れておく変数</summary>
+    GetBox _onGetBox = default;
 
+    /// <summary>一時停止・再開を入れるデリゲートプロパティ</summary>
+    public GetBox OnGetBox
+    {
+        get { return _onGetBox; }
+        set { _onGetBox = value; }
+    }
 
     /// <summary>一時停止・再開を入れるデリゲートプロパティ</summary>
     public LevelUp OnLevelUp
@@ -79,4 +92,17 @@ public class PauseManager : MonoBehaviour
         }
 
     }
+
+    public void PauseResumeGetBox()
+    {
+        _getBoxFlg = !_getBoxFlg;
+        _isGetBox = !_isGetBox;
+
+        if(_onGetBox!=null)
+        {
+            _onGetBox(_getBoxFlg);
+        }
+    }
+
+
 }

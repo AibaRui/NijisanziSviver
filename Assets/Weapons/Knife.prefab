@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9122372935728981114}
   - component: {fileID: 962190495858767667}
   - component: {fileID: 4623846518742740770}
-  - component: {fileID: -4411532986005667301}
+  - component: {fileID: -454148101560928799}
   m_Layer: 0
   m_Name: Knife
   m_TagString: Untagged
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 27ce67bb7d9e1d6419712c11f137171d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -134,7 +134,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.6666666, y: 3.3333333}
   m_EdgeRadius: 0
---- !u!114 &-4411532986005667301
+--- !u!114 &-454148101560928799
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,8 +143,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8000520379871562951}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6539980dde7310e42aa88db2c992b4e0, type: 3}
+  m_Script: {fileID: 11500000, guid: 038d9d3935dbd3144a6bd65943a83639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _lifeTime: 3
-  _isDestroy: 1
+  _isDestroy: 0
+  _threeHitDestroyLevel: 8
+  _noDestroyLevel: 8

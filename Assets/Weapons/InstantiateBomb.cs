@@ -2,33 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InstantiateBomb : InstantiateWeaponBase
+public class InstantiateBomb : InstantiateWeaponBase//,IPausebleGetBox
 {
+
     bool _isAttack = false;
+
     bool _isAttackNow = false;
 
     /// <summary>一回の攻撃で出す武器を、出し終えたかどうか</summary>
     bool _isInstanciateEnd = true;
 
-    IEnumerator _instanciateCorutineBomb;
-
     void Start()
     {
-
         _player = GameObject.FindGameObjectWithTag("Player");
         _weaponManager = FindObjectOfType<WeaponData>();
+ 
     }
 
     void Update()
     {
-        if (!_isLevelUpPause && !_isLevelUpPause)
+        if (!_isLevelUpPause && !_isPause&&!_isPauseGetBox)
         {
             if (_level > 0)
             {
                 if (_isAttack)
                 {
-                    _instanciateCorutineBomb = Attack();
-                    StartCoroutine(Attack());
+                    _instantiateCorutin = Attack();
+                    StartCoroutine(_instantiateCorutin);
                 }
                 else if (_isInstanciateEnd)
                 {
@@ -50,6 +50,7 @@ public class InstantiateBomb : InstantiateWeaponBase
         }
     }
 
+
     IEnumerator Attack()
     {
         //_isAttackNow = true;
@@ -59,58 +60,16 @@ public class InstantiateBomb : InstantiateWeaponBase
 
         for (int i = 0; i < num; i++)
         {
-            var go = Instantiate(_weaponObject);
+            var go = _objectPool.UseObject(_player.transform.position, PoolObjectType.Bomb);
             go.transform.position = _player.transform.position;
-
+            go.gameObject.GetComponent<WeaponBase>().Power = _attackPower * _mainStatas.Power;
+            go.gameObject.transform.localScale = new Vector3(_mainStatas.Eria * _eria, _mainStatas.Eria * _eria, 1);
             yield return new WaitForSeconds(0.5f);
         }
         // _isAttackNow = false;
         _isInstanciateEnd = true;
-        _instanciateCorutineBomb = null;
+        _instantiateCorutin = null;
     }
 
-    public override void LevelUpPause()
-    {
-        _isLevelUpPause = true;
-        if (_instanciateCorutineBomb != null)
-        {
-            StopCoroutine(_instanciateCorutineBomb);
-        }
-    }
-
-    public override void LevelUpResume()
-    {
-        _isLevelUpPause = false;
-
-        if (_instanciateCorutineBomb != null)
-        {
-            StartCoroutine(_instanciateCorutineBomb);
-        }
-    }
-
-    public override void Pause()
-    {
-        _isPause = true;
-        if (!_isLevelUpPause)
-        {
-            if (_instanciateCorutineBomb != null)
-            {
-                StopCoroutine(_instanciateCorutineBomb);
-            }
-        }
-    }
-
-    public override void Resume()
-    {
-        _isPause = false;
-
-        if (!_isLevelUpPause)
-        {
-            if (_instanciateCorutineBomb != null)
-            {
-                StartCoroutine(_instanciateCorutineBomb);
-            }
-        }
-    }
-
+   
 }

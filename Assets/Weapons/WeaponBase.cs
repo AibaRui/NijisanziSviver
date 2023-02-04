@@ -8,17 +8,30 @@ public class WeaponBase : MonoBehaviour
 {
 
     [Header("出してから消すまでの時間")]
-    [Tooltip("出してから消すまでの時間")] [SerializeField] float _lifeTime = 3;
+    [Tooltip("出してから消すまでの時間")] [SerializeField] private float _lifeTime = 3;
+
+    [Header("時間経過によって消すかどうか")]
+    [Tooltip("時間経過によって消すかどうか")] [SerializeField] private bool _isActiveFalse = true;
+
+
+    public float LifeTime { get => _lifeTime; set => _lifeTime = value; }
 
     /// <summary>カウント用の変数</summary>
     float _countTime = 0;
 
-    [SerializeField] bool _isDestroy;
+    protected float _power = 0;
+    public float Power { set => _power = value; }
+
+    protected int _level = 0;
+
+    public int Level { set => _level = value; }
 
     /// <summary>Pauseしているかどうか</summary>
     protected bool _isPause = false;
     /// <summary>レベルアップ中かどうか</summary>
     protected bool _isLevelUpPause = false;
+
+    protected bool _isPauseGetBox = false;
 
 
     float _angularVelocityOfLevelUpPause;
@@ -36,30 +49,43 @@ public class WeaponBase : MonoBehaviour
     PauseManager _pauseManager = default;
     private void Awake()
     {
-        _pauseManager = GameObject.FindObjectOfType<PauseManager>();
+
     }
 
     void Update()
     {
+
         CountDestroyTime();
     }
 
-    void CountDestroyTime()
+    protected void CountDestroyTime()
     {
         if (!_isPause && !_isLevelUpPause)
         {
-            _countTime += Time.deltaTime;
-
-            if (_countTime >= _lifeTime)
+            if (_isActiveFalse)
             {
-                if (_isDestroy)
-                {
-                    Destroy(gameObject);
-                }
+                _countTime += Time.deltaTime;
 
+                if (_countTime >= _lifeTime)
+                {
+                    _countTime = 0;
+                    gameObject.SetActive(false);
+                }
             }
         }
     }
+
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.tag == "Enemy")
+    //    {
+    //        if (collision.gameObject.TryGetComponent<EnemyControl>(out EnemyControl enemy))
+    //        {
+
+    //            enemy.Damage(_power);
+    //        }
+    //    }
+    //}
 
 
     ///////Parse処理/////
@@ -67,6 +93,7 @@ public class WeaponBase : MonoBehaviour
     void OnEnable()
     {
         // 呼んで欲しいメソッドを登録する。
+        _pauseManager = GameObject.FindObjectOfType<PauseManager>();
         _pauseManager.OnPauseResume += PauseResume;
         _pauseManager.OnLevelUp += LevelUpPauseResume;
 
@@ -79,7 +106,7 @@ public class WeaponBase : MonoBehaviour
     {
         // OnDisable ではメソッドの登録を解除すること。さもないとオブジェクトが無効にされたり破棄されたりした後にエラーになってしまう。
         _pauseManager.OnPauseResume -= PauseResume;
-        _pauseManager.OnPauseResume -= LevelUpPauseResume;
+        _pauseManager.OnLevelUp -= LevelUpPauseResume;
     }
 
     void PauseResume(bool isPause)
@@ -108,51 +135,17 @@ public class WeaponBase : MonoBehaviour
 
     public void LevelUpPause()
     {
-        _isLevelUpPause = true;
-        if (_rb)
+        if (!_isPauseGetBox)
         {
-            // 速度・回転を保存し、Rigidbody を停止する
-            _angularVelocityOfLevelUpPause = _rb.angularVelocity;
-            _velocityOfLevelUpPause = _rb.velocity;
-            _rb.Sleep();
-            _rb.isKinematic = true;
-        }
-
-        if (_anim)
-        {
-            _anim.enabled = false;
-        }
-    }
-
-    public void LevelUpResume()
-    {
-        _isLevelUpPause = false;
-
-        if (_rb)
-        {
-            // Rigidbody の活動を再開し、保存しておいた速度・回転を戻す
-            _rb.WakeUp();
-            _rb.angularVelocity = _angularVelocityOfLevelUpPause;
-            _rb.velocity = _velocityOfLevelUpPause;
-            _rb.isKinematic = false;
-        }
-
-        if (_anim)
-        {
-            _anim.enabled = true;
-        }
-    }
-
-    public void Pause()
-    {
-        if (!_isLevelUpPause)
-        {
-            _isPause = true;
-            // 速度・回転を保存し、Rigidbody を停止する
-            _angularVelocity = _rb.angularVelocity;
-            _velocity = _rb.velocity;
-            _rb.Sleep();
-            _rb.isKinematic = true;
+            _isLevelUpPause = true;
+            if (_rb)
+            {
+                // 速度・回転を保存し、Rigidbody を停止する
+                _angularVelocityOfLevelUpPause = _rb.angularVelocity;
+                _velocityOfLevelUpPause = _rb.velocity;
+                _rb.Sleep();
+                _rb.isKinematic = true;
+            }
 
             if (_anim)
             {
@@ -161,16 +154,101 @@ public class WeaponBase : MonoBehaviour
         }
     }
 
+    public void LevelUpResume()
+    {
+        if (!_isPauseGetBox)
+        {
+            _isLevelUpPause = false;
+
+            if (_rb)
+            {
+                // Rigidbody の活動を再開し、保存しておいた速度・回転を戻す
+                _rb.isKinematic = false;
+                _rb.WakeUp();
+                _rb.angularVelocity = _angularVelocityOfLevelUpPause;
+                _rb.velocity = _velocityOfLevelUpPause;
+            }
+
+            if (_anim)
+            {
+                _anim.enabled = true;
+            }
+        }
+    }
+
+    public void Pause()
+    {
+        if (!_isLevelUpPause && !_isPauseGetBox)
+        {
+            if (_rb)
+            {
+                _isPause = true;
+                // 速度・回転を保存し、Rigidbody を停止する
+                _angularVelocity = _rb.angularVelocity;
+                _velocity = _rb.velocity;
+                _rb.Sleep();
+                _rb.isKinematic = true;
+
+                if (_anim)
+                {
+                    _anim.enabled = false;
+                }
+            }
+        }
+    }
+
     public void Resume()
     {
-        if (!_isLevelUpPause)
+        if (!_isLevelUpPause && !_isPauseGetBox)
         {
             _isPause = false;
-            // Rigidbody の活動を再開し、保存しておいた速度・回転を戻す
-            _rb.WakeUp();
-            _rb.angularVelocity = _angularVelocity;
-            _rb.velocity = _velocity;
-            _rb.isKinematic = false;
+            if (_rb)
+            {
+                // Rigidbody の活動を再開し、保存しておいた速度・回転を戻す
+                _rb.WakeUp();
+                _rb.angularVelocity = _angularVelocity;
+                _rb.velocity = _velocity;
+                _rb.isKinematic = false;
+            }
+
+
+            if (_anim)
+            {
+                _anim.enabled = true;
+            }
+        }
+    }
+    protected void PauseResumeGetBox(bool flg)
+    {
+        if (flg)
+        {
+            _isPauseGetBox = flg;
+            if (_rb)
+            {
+                // 速度・回転を保存し、Rigidbody を停止する
+                _angularVelocity = _rb.angularVelocity;
+                _velocity = _rb.velocity;
+                _rb.Sleep();
+                _rb.isKinematic = true;
+
+                if (_anim)
+                {
+                    _anim.enabled = false;
+                }
+            }
+        }
+        else
+        {
+            _isPauseGetBox = flg;
+            if (_rb)
+            {
+                // Rigidbody の活動を再開し、保存しておいた速度・回転を戻す
+                _rb.WakeUp();
+                _rb.angularVelocity = _angularVelocity;
+                _rb.velocity = _velocity;
+                _rb.isKinematic = false;
+            }
+
 
             if (_anim)
             {

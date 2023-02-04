@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InstantiateBoock : InstantiateWeaponBase
+public class InstantiateBoock : InstantiateWeaponBase//,IPausebleGetBox
 {
+    [Header("本の動いている時間")]
+    [SerializeField] float _bookMovingTime = 5;
+
     List<GameObject> go = new List<GameObject>();
 
 
@@ -11,8 +14,8 @@ public class InstantiateBoock : InstantiateWeaponBase
     public float _period;
 
 
-    bool _isAttackNow;
-    bool _isAttack;
+    private bool _isAttackNow;
+    private bool _isAttack;
     void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player");
@@ -21,14 +24,15 @@ public class InstantiateBoock : InstantiateWeaponBase
 
     void Update()
     {
-        if (!_isLevelUpPause && !_isLevelUpPause)
+        if (!_isLevelUpPause && !_isPause && !_isPauseGetBox)
         {
-            _period = _speed;
+
             if (_level > 0)
             {
                 if (_isAttack && _isAttackNow == false)
                 {
-                    StartCoroutine(Attack());
+                    _instantiateCorutin = Attack();
+                    StartCoroutine(_instantiateCorutin);
                 }
                 else if (!_isAttack)
                 {
@@ -53,44 +57,46 @@ public class InstantiateBoock : InstantiateWeaponBase
 
     IEnumerator Attack()
     {
+        //現在攻撃中
         _isAttackNow = true;
 
         //発射物の数
         var num = _number + _mainStatas.Number;
-
+        //オブジェクト間の角度差
+        float angleDiff = 360f / num;
+        //出す武器のリスト
+        List<GameObject> books = new List<GameObject>();
+        //リストに出す武器を登録する
         for (int i = 0; i < num; i++)
         {
-            var g = Instantiate(_weaponObject);
-            g.transform.SetParent(_player.transform);
-            Vector2 pos = new Vector2(_player.transform.position.x + 1, _player.transform.position.y);
-            g.transform.position = pos;
-            go.Add(g);
-            yield return new WaitForSeconds(0.1f);
+            var go = _objectPool.UseObject(transform.position, PoolObjectType.Book);
+            books.Add(go);
         }
+        //武器をプールから借り、初期設定する
+        for (int i = 0; i < books.Count; i++)
+        {
+            //各オブジェクトを円状に配置         
+            Vector3 childPostion = _player.transform.position;
+            float radius = _eria + _mainStatas.Eria;
+            float angle = (90 - angleDiff * i) * Mathf.Deg2Rad;
+            childPostion.x += radius * Mathf.Cos(angle);
+            childPostion.y += radius * Mathf.Sin(angle);
+            books[i].transform.position = childPostion;
 
-        yield return new WaitForSeconds(5);
+            //初期設定
+         //   books[i].transform.SetParent(_player.transform);
+            books[i].gameObject.GetComponent<WeaponBase>().Power = _attackPower * _mainStatas.Power;
+            books[i].gameObject.GetComponent<BookMove>().Period = _speed * _mainStatas.AttackSpeed;
+            books[i].gameObject.GetComponent<BookMove>().Radius = _eria + _mainStatas.Eria;
+            books[i].gameObject.GetComponent<WeaponBase>().Level = _level;
+        }
+        yield return new WaitForSeconds(_bookMovingTime);
+        //リストをリセット
+        books.Clear();
+        //現在は攻撃していない
         _isAttack = false;
         _isAttackNow = false;
+        _instantiateCorutin = null;
     }
 
-    public override void LevelUpPause()
-    {
-        _isLevelUpPause = true;
-    }
-
-    public override void LevelUpResume()
-    {
-        _isLevelUpPause = false;
-
-    }
-
-    public override void Pause()
-    {
-        _isPause = true;
-    }
-
-    public override void Resume()
-    {
-        _isPause = false;
-    }
 }

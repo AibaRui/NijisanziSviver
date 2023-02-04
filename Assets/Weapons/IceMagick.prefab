@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 9168206685968169786}
   - component: {fileID: 9030596092361516115}
   - component: {fileID: 4409787122421535311}
-  - component: {fileID: -4233131637904374162}
+  - component: {fileID: -769410212139359176}
+  - component: {fileID: 8490739956083931636}
   m_Layer: 0
   m_Name: IceMagick
   m_TagString: Untagged
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 8
+  m_SortingOrder: 11
   m_Sprite: {fileID: 1599050390, guid: d6a8e6a5a6eac7f438467b8aaeab7e80, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -126,14 +127,35 @@ Animator:
   m_Controller: {fileID: 9100000, guid: adc721c1c3ad1a4478abfefcfcd6943b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &-4233131637904374162
+--- !u!50 &-769410212139359176
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2182089591839943761}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &8490739956083931636
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,8 +164,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2182089591839943761}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6539980dde7310e42aa88db2c992b4e0, type: 3}
+  m_Script: {fileID: 11500000, guid: 8e3bc48eca940c94fa492a0c3089f18e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lifeTime: 0.5
-  _isDestroy: 1
+  _lifeTime: 0.63
