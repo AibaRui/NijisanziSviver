@@ -26,7 +26,7 @@ public class PlayerControl : MonoBehaviour
     {
         _weapon.LevelUp();
         _rb = GetComponent<Rigidbody2D>();
-        _playerMove.Anim = _anim;
+       
         _mainStatas.SetGetEria(_gtEria.transform.localScale);
     }
 

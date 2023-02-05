@@ -11,22 +11,21 @@ public class ActiveFalse : MonoBehaviour
     /// <summary>レベルアップ中かどうか</summary>
     private bool _isLevelUpPause = false;
 
-
     Animator _anim;
     PauseManager _pauseManager = default;
 
 
     IEnumerator _col;
-    
+
     IEnumerator CountTime()
     {
         yield return new WaitForSeconds(_lifeTime);
         gameObject.SetActive(false);
+        _col = null;
     }
 
     void OnEnable()
     {
-
         _pauseManager = FindObjectOfType<PauseManager>();
 
         // 呼んで欲しいメソッドを登録する。
@@ -41,6 +40,12 @@ public class ActiveFalse : MonoBehaviour
         // OnDisable ではメソッドの登録を解除すること。さもないとオブジェクトが無効にされたり破棄されたりした後にエラーになってしまう。
         _pauseManager.OnPauseResume -= PauseResume;
         _pauseManager.OnPauseResume -= LevelUpPauseResume;
+
+        if (_col != null)
+        {
+            StopCoroutine(_col);
+            _col = null;
+        }
     }
 
     ///////Parse処理/////
@@ -72,7 +77,11 @@ public class ActiveFalse : MonoBehaviour
     {
         _isLevelUpPause = true;
 
-        StopCoroutine(_col);
+        if (_col != null)
+        {
+            StopCoroutine(_col);
+        }
+
         if (_anim)
         {
             _anim.enabled = false;
@@ -84,7 +93,10 @@ public class ActiveFalse : MonoBehaviour
     {
         _isLevelUpPause = false;
 
-        StartCoroutine(_col);
+        if (_col != null)
+        {
+            StartCoroutine(_col);
+        }
 
         if (_anim)
         {
@@ -100,7 +112,10 @@ public class ActiveFalse : MonoBehaviour
         {
             _isPause = true;
 
-            StopCoroutine(_col);
+            if (_col != null)
+            {
+                StopCoroutine(_col);
+            }
 
             if (_anim)
             {
@@ -115,7 +130,10 @@ public class ActiveFalse : MonoBehaviour
         {
             _isPause = false;
 
-            StartCoroutine(_col);
+            if (_col != null)
+            {
+                StartCoroutine(_col);
+            }
 
             if (_anim)
             {

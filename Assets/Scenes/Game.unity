@@ -12077,7 +12077,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &818776858
 Transform:
   m_ObjectHideFlags: 0
@@ -19454,7 +19454,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1348349162
 Transform:
   m_ObjectHideFlags: 0
@@ -22475,7 +22475,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 3
-  _playerSprite: {fileID: 1348349161}
+  _playerSprite: {fileID: 818776857}
+  _anim: {fileID: 818776859}
 --- !u!212 &1584953263
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -22583,7 +22584,7 @@ MonoBehaviour:
   _playrHp: {fileID: 1584953265}
   _mainStatas: {fileID: 1626408505}
   _pauseManager: {fileID: 1282714269}
-  _anim: {fileID: 1348349163}
+  _anim: {fileID: 818776859}
 --- !u!1 &1587899639
 GameObject:
   m_ObjectHideFlags: 0
@@ -24016,7 +24017,7 @@ MonoBehaviour:
   _levelUpController: {fileID: 159537776}
   _boxControl: {fileID: 583602880}
   _objectPool: {fileID: 948891256}
-  _addPower: 6.05
+  _addPower: 8
   _randamX: 2
 --- !u!4 &1697571198
 Transform:

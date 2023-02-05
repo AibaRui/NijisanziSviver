@@ -10,13 +10,13 @@ public class PlayerMove : MonoBehaviour
     [Header("プレイヤーのスプライト")]
     [Tooltip("プレイヤーのスプライト")] [SerializeField] GameObject _playerSprite ;
 
-
+    [SerializeField]
     private Animator _anim;
-    public Animator Anim { get => _anim; set => value = _anim; }
+  //  public Animator Anim { get => _anim; set => value = _anim; }
     Rigidbody2D _rb;
     void Start()
     {
-        _anim = _anim.GetComponent<Animator>();
+        //_anim = _anim.GetComponent<Animator>();
         _rb = GetComponent<Rigidbody2D>();
     }
 
