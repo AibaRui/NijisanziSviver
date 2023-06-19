@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7fa4aefe85b3434587ab89a50fcc490, type: 3}
+  m_Name: CoolTime
+  m_EditorClassIdentifier: 
+  _itemName: "\u30AF\u30FC\u30EB\u30BF\u30A4\u30E0"
+  _maxLevel: 5
+  _statasTextAssets: {fileID: 4900000, guid: 39a9c66abaad4d14ca78b099c1355996, type: 3}
+  _infoTextAssets: {fileID: 4900000, guid: 8ca751ba484cf014884a4ef8dff6d641, type: 3}
+  _itemPrefab: {fileID: 1121533925732205656, guid: d9e27d6218d30d94f82df14492023288, type: 3}
+  _iconUseBox: {fileID: 8736973481223045444, guid: 638486be4460c8f42b59be70bd2d573d, type: 3}
+  _iconUseUI: {fileID: 8024224188045515375, guid: b2de2c2c77d53694b90e0b999cc2f2b8, type: 3}
+  _panel: {fileID: 1956601115087935495, guid: e7cfa87b489b259468df8121e7be2432, type: 3}

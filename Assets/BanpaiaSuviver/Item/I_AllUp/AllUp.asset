@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7fa4aefe85b3434587ab89a50fcc490, type: 3}
+  m_Name: AllUp
+  m_EditorClassIdentifier: 
+  _itemName: "\u7F6A"
+  _maxLevel: 1
+  _statasTextAssets: {fileID: 4900000, guid: ed54e5fac40de814a8020c251a2f4cd1, type: 3}
+  _infoTextAssets: {fileID: 4900000, guid: c1f5de9b39e624b439d2733aa20caac1, type: 3}
+  _itemPrefab: {fileID: 5818117203039479281, guid: 2381208727598104a9a533e3d7e9bcaf, type: 3}
+  _iconUseBox: {fileID: 8233215787431449578, guid: 34909419f0c7876428e5938004e78bbb, type: 3}
+  _iconUseUI: {fileID: 4577724452051985049, guid: aee4c52cdecbbda44946f1daf6d110b2, type: 3}
+  _panel: {fileID: 3666462039319451497, guid: f63b16baf18500b40b4754898e15174b, type: 3}

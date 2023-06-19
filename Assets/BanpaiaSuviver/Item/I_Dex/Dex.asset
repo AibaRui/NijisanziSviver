@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7fa4aefe85b3434587ab89a50fcc490, type: 3}
+  m_Name: Dex
+  m_EditorClassIdentifier: 
+  _itemName: Dex
+  _maxLevel: 5
+  _statasTextAssets: {fileID: 4900000, guid: e27b72d813b910a409013503df058da7, type: 3}
+  _infoTextAssets: {fileID: 4900000, guid: 6caa05fbeaac2944b9712979849462fb, type: 3}
+  _itemPrefab: {fileID: 0}
+  _iconUseBox: {fileID: 0}
+  _iconUseUI: {fileID: 0}
+  _panel: {fileID: 0}

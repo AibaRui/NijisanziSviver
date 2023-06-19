@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09bbb18b026ff424a9e323c94eee197e, type: 3}
+  m_Name: Hiyoko
+  m_EditorClassIdentifier: 
+  _weaponName: "\u30BB\u30D0\u30B9"
+  _maxLevel: 7
+  _instanceObject: {fileID: 5193294811071034826, guid: 93b652d4299775f4991c6a436a14d544, type: 3}
+  _iconUseUI: {fileID: 1014623134739546758, guid: 49d3501e93700e842ab66787de91c7eb, type: 3}
+  _iconUseBox: {fileID: 2097529875949791514, guid: 42a16e420bc8eea4c8695d48ff8dea3e, type: 3}
+  _levelUpButtun: {fileID: 3898325979833475188, guid: 13961f41a2182684c883c96ff08bf961, type: 3}
+  _levelData: {fileID: 4900000, guid: fc86ba7928ec1224d825703c24315e31, type: 3}
+  _infoData: {fileID: 4900000, guid: 229a24fc3332df34ebf4b85e90a2a3ad, type: 3}

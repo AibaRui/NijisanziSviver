@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09bbb18b026ff424a9e323c94eee197e, type: 3}
+  m_Name: Book
+  m_EditorClassIdentifier: 
+  _weaponName: "\u672C"
+  _maxLevel: 8
+  _instanceObject: {fileID: 311477738525259807, guid: a1ea4859763e6d048b82bb08eb122e61, type: 3}
+  _iconUseUI: {fileID: 3922603938762452303, guid: 8c75ce915179a824998af4c775d343c0, type: 3}
+  _iconUseBox: {fileID: 5970721060306205640, guid: 75cf11e75f61a394fadbe6993880143c, type: 3}
+  _levelUpButtun: {fileID: 8004669328322343764, guid: 7ff1dc1b5fe16934b870727c3046fe11, type: 3}
+  _levelData: {fileID: 4900000, guid: ed0d0791a2088cb45ada5dcb0002fd06, type: 3}
+  _infoData: {fileID: 4900000, guid: 00a7a3c1eca4a0a4ebeb5d44fe760428, type: 3}
