@@ -8,9 +8,18 @@ public class ItemManager : MonoBehaviour
     [Header("ゲーム内でつかう武器")]
     [SerializeField] private List<ScritableItem> _useItems = new List<ScritableItem>();
 
+    /// <summary>現在使っているアイテムの名前</summary>
+    private List<string> _onUseItems = new List<string>();
+    /// <summary>アイテムの名前</summary>
+    private List<string> _itemNameT = new List<string>();
+    /// <summary>現在の実装されている武器とそのレベルを入れる</summary>
+    Dictionary<string, ItemLevelDate> _itemsLevel = new Dictionary<string, ItemLevelDate>();
+
+    public Dictionary<string, ItemLevelDate> ItemLevels { get => _itemsLevel; set => _itemsLevel = value; }
+    public List<string> OnUseItems { get => _onUseItems; set => _onUseItems = value; }
+    public List<string> ItemNames { get => _itemNameT; set => _itemNameT = value; }
 
     [SerializeField] private ItemData _itemData;
-
     [SerializeField] private LevelUpController _levelUpController;
     [SerializeField] private BoxControl _boxControl;
     [SerializeField] private PauseManager _pauseManager;
@@ -29,7 +38,7 @@ public class ItemManager : MonoBehaviour
 
             _itemData.LevelTable.Add(a.Statas);
             _itemData.InfoTable.Add(a.Info);
-            _itemData.BuildLevelUpTable(a.ItemName,a.Statas,a.Info);
+            _itemData.BuildLevelUpTable(a.ItemName, a.Statas, a.Info);
         }
 
         _itemData.Init(this);
@@ -58,14 +67,18 @@ public class ItemManager : MonoBehaviour
         //レベルアップ終了の処理をボタンに登録
         button.onClick.AddListener(_levelUpController.EndLevelUp);
 
+        panel.SetActive(false);
 
         //Box用のIconを設定
         var boxIcon = Instantiate(item.IconUseBox);
         boxIcon.transform.SetParent(_boxControl.IconParentObject);
 
+        //UI用のアイコンを生成
+        var icon = Instantiate(item.IconUseUI);
+
         //アイコンの設定
         _canvasManager.NameOfIconPanelUseBox.Add(item.ItemName, boxIcon);
-        _canvasManager.NameOfIconPanelUseUI.Add(item.ItemName, item.IconUseUI);
+        _canvasManager.NameOfIconPanelUseUI.Add(item.ItemName, icon);
         _canvasManager.NameOfInformationPanel.Add(item.ItemName, panel);
 
         _levelUpController.SetItemData(item.ItemName, item.MaxLevel);

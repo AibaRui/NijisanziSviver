@@ -7,24 +7,12 @@ using UnityEngine.UI;
 public class LevelUpController : MonoBehaviour
 {
     [Header("武器、アイテムの最大所持数")]
-    [SerializeField] int _maxItemAndWeaponNumbers = 0;
+    [SerializeField] private int _maxItemAndWeaponNumbers = 0;
 
-    List<GameObject> instanciatePanels = new List<GameObject>();
-
-
-    /// <summary>現在使っている武器の名前</summary>
-    private List<string> _onUseWeapons = new List<string>();
-
-    /// <summary>現在使っているアイテムの名前</summary>
-    private List<string> _onUseItems = new List<string>();
-
-    /// <summary>武器の名前</summary>
-    private List<string> _weaponNameT = new List<string>();
-
-    /// <summary>アイテムの名前</summary>
-    private List<string> _itemNameT = new List<string>();
-
-
+    /// <summary>
+    /// レベルアップ時に選択肢の
+    /// 生成したパネルを一時保存しておくリスト</summary>
+    private List<GameObject> instanciatePanels = new List<GameObject>();
 
     /// <summary>プレイヤーのレベル</summary>
     private int _playerLevel = 1;
@@ -35,36 +23,20 @@ public class LevelUpController : MonoBehaviour
 
     private float nextLevelUpPer = 1.5f;
     /// <summary>レベルの演出をする回数</summary>
-    int levelTass = 0;
-
-
-    /// <summary>現在の実装されている武器とそのレベルを入れる</summary>
-    Dictionary<string, WeaponLevelData> _weaponsLevel = new Dictionary<string, WeaponLevelData>();
-    /// <summary>現在の実装されている武器とそのレベルを入れる</summary>
-    Dictionary<string, ItemLevelDate> _itemsLevel = new Dictionary<string, ItemLevelDate>();
-
-
-
-    public WeaponInforMaition _weaponInforMaition = default;
-
-    [SerializeField] private CanvasManager _canvasManager;
-    [SerializeField] GameManager _gm;
-    [SerializeField] MainStatas _mainStatas;
-    [SerializeField] WeaponManaager weaponManger;
-    [SerializeField] ItemManager itemData;
-    [SerializeField] PauseManager _pauseManager = default;
+    private int levelTass = 0;
 
     private AudioSource _aud;
 
-    public List<string> WeaponNames { get => _weaponNameT; set => _weaponNameT = value; }
-    public List<string> ItemNames { get => _itemNameT; set => _itemNameT = value; }
-    public List<string> OnUseItems { get => _onUseItems; set => _onUseItems = value; }
+    [SerializeField] private CanvasManager _canvasManager;
+    [SerializeField] private GameManager _gm;
+    [SerializeField] private MainStatas _mainStatas;
+    [SerializeField] private WeaponManaager weaponManger;
+    [SerializeField] private ItemManager itemData;
+    [SerializeField] private PauseManager _pauseManager = default;
 
-    public List<string> OnUseWeapons { get => _onUseWeapons; set => _onUseWeapons = value; }
+    public WeaponInforMaition _weaponInforMaition = default;
+
     public int MaxItemAndWeaponNumbers { get => _maxItemAndWeaponNumbers; }
-
-    public Dictionary<string, WeaponLevelData> WeaponLevels { get => _weaponsLevel; set => _weaponsLevel = value; }
-    public Dictionary<string, ItemLevelDate> ItemLevels { get => _itemsLevel; set => _itemsLevel = value; }
 
     // [Header("レベルアップのアイテムのレイアウトグループ")]
     // [SerializeField] LayoutGroup _itemLayoutGroupOnLevelUp;
@@ -73,8 +45,6 @@ public class LevelUpController : MonoBehaviour
     // [Header("レベルアップの武器のレイアウトグループ")]
     // [SerializeField] LayoutGroup _weaponLayoutGroupOnLevelUp;
     // public LayoutGroup WeaponLayoutGroupOnLevelUp { get => _weaponLayoutGroupOnLevelUp; }
-
-
 
     private void Awake()
     {
@@ -87,46 +57,44 @@ public class LevelUpController : MonoBehaviour
     public void SetWeaponData(string weaponName, int maxLevel)
     {
         WeaponLevelData data = new WeaponLevelData(maxLevel, 0);
-        _weaponNameT.Add(weaponName);
-        _weaponsLevel.Add(weaponName, data);
+        weaponManger.WeaponNames.Add(weaponName);
+        weaponManger.WeaponLevels.Add(weaponName, data);
     }
 
     /// <summary>各アイテムから呼ぶ。名前と最高レベルを確認する</summary>
     public void SetItemData(string itemName, int maxLevel)
     {
         ItemLevelDate data = new ItemLevelDate(maxLevel, 0);
-        _itemNameT.Add(itemName);
-        _itemsLevel.Add(itemName, data);
+        itemData.ItemNames.Add(itemName);
+        itemData.ItemLevels.Add(itemName, data);
     }
 
     /// <summary>各武器から呼ぶ。武器のレベルを再設定</summary>
     public void WeaponLevelUp(string name, int level)
     {
-        _weaponsLevel[name].NowLevel += 1;
+        weaponManger.WeaponLevels[name].NowLevel += 1;
         //もし武器が初ゲットだったら、現在使っている武器として記録する。
-        if (_weaponsLevel[name].NowLevel == 1)
+        if (weaponManger.WeaponLevels[name].NowLevel == 1)
         {
-            _onUseWeapons.Add(name);
-            var go = Instantiate(_canvasManager.NameOfInformationPanel[name]);
-            var go2 = Instantiate(_canvasManager.NameOfInformationPanel[name]);
-            go.transform.SetParent(_canvasManager.WeaponLayoutGroup.transform);
-            // go2.transform.SetParent(_weaponLayoutGroupOnLevelUp.transform);
+            //現在使っている武器を記録
+            weaponManger.OnUseWeapons.Add(name);
+
+            //現在使っているアイコンを設定
+            _canvasManager.NameOfIconPanelUseUI[name].transform.SetParent(_canvasManager.WeaponLayoutGroup.transform);
         }
     }
 
     /// <summary>各アイテムから呼ぶ。アイテムのレベルを再設定</summary>
     public void ItemLevelUp(string name, int level)
     {
-        _itemsLevel[name].NowLevel += 1;
+        itemData.ItemLevels[name].NowLevel += 1;
         //もしアイテムが初ゲットだったら、現在使っているアイテムとして記録する。
-        if (_itemsLevel[name].NowLevel == 1)
+        if (itemData.ItemLevels[name].NowLevel == 1)
         {
-            _onUseItems.Add(name);
+            itemData.OnUseItems.Add(name);
 
-            var go = Instantiate(_canvasManager.NameOfInformationPanel[name]);
-            var go2 = Instantiate(_canvasManager.NameOfInformationPanel[name]);
-            go.transform.SetParent(_canvasManager.ItemLayoutGroup.transform);
-            // go2.transform.SetParent(_itemLayoutGroupOnLevelUp.transform);
+            //現在使っているアイコンを設定
+            _canvasManager.NameOfIconPanelUseUI[name].transform.SetParent(_canvasManager.ItemLayoutGroup.transform);
         }
     }
 
@@ -196,11 +164,11 @@ public class LevelUpController : MonoBehaviour
         if (_canvasManager.WeaponLayoutGroup.transform.childCount < _maxItemAndWeaponNumbers)
         {
             //すべての武器のレベルを見て、Maxレベル以外のものを選出
-            foreach (var n in _weaponNameT)
+            foreach (var n in weaponManger.WeaponNames)
             {
-                if (_weaponsLevel[n].NowLevel < _weaponsLevel[n].MaxLevel)
+                if (weaponManger.WeaponLevels[n].NowLevel < weaponManger.WeaponLevels[n].MaxLevel)
                 {
-                    dicWeapon.Add(n, _weaponsLevel[n].NowLevel);
+                    dicWeapon.Add(n, weaponManger.WeaponLevels[n].NowLevel);
                     nameWeapon.Add(n);
                 }
             }
@@ -208,11 +176,11 @@ public class LevelUpController : MonoBehaviour
         else//空きが無かったら、LevelMax以外の"使ってい居るものから"を選出
         {
             //"現在使用しているアイテム"のアイテムのレベルを見て、Maxレベル以外のものを選出
-            foreach (var n in _onUseWeapons)
+            foreach (var n in weaponManger.OnUseWeapons)
             {
-                if (_weaponsLevel[n].NowLevel < _weaponsLevel[n].MaxLevel)
+                if (weaponManger.WeaponLevels[n].NowLevel < weaponManger.WeaponLevels[n].MaxLevel)
                 {
-                    dicWeapon.Add(n, _weaponsLevel[n].NowLevel);
+                    dicWeapon.Add(n, weaponManger.WeaponLevels[n].NowLevel);
                     nameWeapon.Add(n);
                 }
             }
@@ -222,11 +190,11 @@ public class LevelUpController : MonoBehaviour
         if (_canvasManager.ItemLayoutGroup.transform.childCount < _maxItemAndWeaponNumbers)
         {
             //すべてのアイテムのレベルを見て、Maxレベル以外のものを選出
-            foreach (var n in _itemNameT)
+            foreach (var n in itemData.ItemNames)
             {
-                if (_itemsLevel[n].NowLevel < _itemsLevel[n].MaxLevel)
+                if (itemData.ItemLevels[n].NowLevel < itemData.ItemLevels[n].MaxLevel)
                 {
-                    dicItem.Add(n, _itemsLevel[n].NowLevel);
+                    dicItem.Add(n, itemData.ItemLevels[n].NowLevel);
                     nameItem.Add(n);
                 }
             }
@@ -234,11 +202,11 @@ public class LevelUpController : MonoBehaviour
         else//空きが無かったら、LevelMax以外の"使ってい居るものから"を選出
         {
             //"現在使用しているアイテム"のアイテムのレベルを見て、Maxレベル以外のものを選出
-            foreach (var n in _onUseItems)
+            foreach (var n in itemData.OnUseItems)
             {
-                if (_itemsLevel[n].NowLevel < _itemsLevel[n].MaxLevel)
+                if (itemData.ItemLevels[n].NowLevel < itemData.ItemLevels[n].MaxLevel)
                 {
-                    dicItem.Add(n, _itemsLevel[n].NowLevel);
+                    dicItem.Add(n, itemData.ItemLevels[n].NowLevel);
                     nameItem.Add(n);
                 }
             }
@@ -291,12 +259,12 @@ public class LevelUpController : MonoBehaviour
                 text.text = weaponInformaition.Te;
 
                 //武器のパネルのレベルの表記Texttを更新
-                if (_weaponsLevel[nameWeapon[r]].NowLevel > 0)
+                if (weaponManger.WeaponLevels[nameWeapon[r]].NowLevel > 0)
                 {
                     var text2 = panel.transform.GetChild(0).GetComponent<Text>();
 
-                    if (_weaponsLevel[nameWeapon[r]].NowLevel + 1 == _weaponsLevel[nameWeapon[r]].MaxLevel) text2.text = "Level:Max";
-                    else text2.text = "Level:" + (_weaponsLevel[nameWeapon[r]].NowLevel + 1).ToString();
+                    if (weaponManger.WeaponLevels[nameWeapon[r]].NowLevel + 1 == weaponManger.WeaponLevels[nameWeapon[r]].MaxLevel) text2.text = "Level:Max";
+                    else text2.text = "Level:" + (weaponManger.WeaponLevels[nameWeapon[r]].NowLevel + 1).ToString();
                 }
 
                 //武器のパネルをレイアウトグループの子オブジェクトにする
@@ -324,11 +292,11 @@ public class LevelUpController : MonoBehaviour
                 text.text = itemInformaition.Te;
 
                 //武器のパネルのレベルの表記Texttを更新
-                if (_itemsLevel[nameItem[r]].NowLevel > 0)
+                if (itemData.ItemLevels[nameItem[r]].NowLevel > 0)
                 {
-                    Debug.Log(_itemsLevel[nameItem[r]].NowLevel);
+                    Debug.Log(itemData.ItemLevels[nameItem[r]].NowLevel);
                     var text2 = panel.transform.GetChild(0).GetComponent<Text>();
-                    text2.text = "Level:" + (_itemsLevel[nameItem[r]].NowLevel + 1).ToString();
+                    text2.text = "Level:" + (itemData.ItemLevels[nameItem[r]].NowLevel + 1).ToString();
                 }
 
                 //武器のパネルをレイアウトグループの子オブジェクトにする
@@ -357,16 +325,16 @@ public class LevelUpController : MonoBehaviour
         //演出用のパネルを非表示にする
         foreach (var p in instanciatePanels)
         {
-            p.transform.position = _canvasManager.ButtunEndUsePos.position;
+            //p.transform.SetParent(_canvasManager.OrizinCanvus);
+            p.transform.localPosition = _canvasManager.ButtunEndUsePos.position;
             p.SetActive(false);
-            p.transform.SetParent(_canvasManager.OrizinCanvus);
         }
 
         foreach (var p in _canvasManager.LastPanel)
         {
-            p.transform.position = _canvasManager.ButtunEndUsePos.position;
+            // p.transform.SetParent(_canvasManager.OrizinCanvus);
+            p.transform.localPosition = _canvasManager.ButtunEndUsePos.position;
             p.SetActive(false);
-            p.transform.SetParent(_canvasManager.OrizinCanvus);
         }
 
         _canvasManager.LevelUpPanel.SetActive(false);

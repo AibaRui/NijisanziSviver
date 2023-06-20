@@ -18,6 +18,21 @@ public class WeaponManaager : MonoBehaviour
     [Header("プレイヤー")]
     [SerializeField] private GameObject _player;
 
+
+    /// <summary>現在使っている武器の名前</summary>
+    private List<string> _onUseWeapons = new List<string>();
+
+    /// <summary>武器の名前</summary>
+    private List<string> _weaponNameT = new List<string>();
+
+    /// <summary>現在の実装されている武器とそのレベルを入れる</summary>
+    Dictionary<string, WeaponLevelData> _weaponsLevel = new Dictionary<string, WeaponLevelData>();
+
+    public Dictionary<string, WeaponLevelData> WeaponLevels { get => _weaponsLevel; set => _weaponsLevel = value; }
+    public List<string> WeaponNames { get => _weaponNameT; set => _weaponNameT = value; }
+
+    public List<string> OnUseWeapons { get => _onUseWeapons; set => _onUseWeapons = value; }
+
     [SerializeField] private WeaponData _weaponData;
     [SerializeField] private LevelUpController _levelUpController;
     [SerializeField] private BoxControl _boxControl;
@@ -67,7 +82,7 @@ public class WeaponManaager : MonoBehaviour
 
         weaponBase.Init(weapon.WeaponName, weapon.MaxLevel);
 
-            _weaponData.BuildLevelUpTable(weapon.WeaponName, weapon.LevelData, weapon.InfoData);
+        _weaponData.BuildLevelUpTable(weapon.WeaponName, weapon.LevelData, weapon.InfoData);
 
 
         //ボタンの設定
@@ -79,13 +94,18 @@ public class WeaponManaager : MonoBehaviour
         //レベルアップ終了の処理をボタンに登録
         button.onClick.AddListener(_levelUpController.EndLevelUp);
 
+        panel.SetActive(false);
+
         //Box用のアイコンを生成
         var boxIcon = Instantiate(weapon.IconBox);
         boxIcon.transform.SetParent(_boxControl.IconParentObject);
 
+        //UI用のアイコンを生成
+        var icon = Instantiate(weapon.IconInGameUI);
+
         //アイコンの設定
         _canvasManager.NameOfIconPanelUseBox.Add(weapon.WeaponName, boxIcon);
-        _canvasManager.NameOfIconPanelUseUI.Add(weapon.WeaponName, weapon.IconInGameUI);
+        _canvasManager.NameOfIconPanelUseUI.Add(weapon.WeaponName, icon);
         _canvasManager.NameOfInformationPanel.Add(weapon.WeaponName, panel);
 
 

@@ -12,11 +12,9 @@ public class InstantiateIceMagic : InstantiateWeaponBase//,IPausebleGetBox
     /// <summary>一回の攻撃で出す武器を、出し終えたかどうか</summary>
     bool _isInstanciateEnd = true;
 
-    [SerializeField] GameObject _playerSprite;
-
     void Start()
     {
-        _player = GameObject.FindGameObjectWithTag("Player");
+
     }
 
     void Update()
@@ -55,12 +53,12 @@ public class InstantiateIceMagic : InstantiateWeaponBase//,IPausebleGetBox
     {
         //_isAttackNow = true;
         _isAttack = false;
- 
+
         var num = _number + _mainStatas.Number;
 
         for (int i = 0; i < num; i++)
         {
-            SpownIce(i, _playerSprite.transform.localScale.x);
+            SpownIce(i, _player.transform.localScale.x);
 
             yield return new WaitForSeconds(0.1f);
         }
@@ -81,7 +79,7 @@ public class InstantiateIceMagic : InstantiateWeaponBase//,IPausebleGetBox
             if (i == 0) pos = new Vector3(-_spownAddPos, 0, 0);
             else pos = new Vector3(-_spownAddPos * i, 0, 0);
 
-            go.transform.position = _playerSprite.transform.position + pos;
+            go.transform.position = _player.transform.position + pos;
             go.gameObject.GetComponent<WeaponBase>().Power = _attackPower * _mainStatas.Power;
             go.gameObject.transform.localScale = new Vector3(-_mainStatas.Eria * _eria, _mainStatas.Eria * _eria, 1);
         }
@@ -92,12 +90,12 @@ public class InstantiateIceMagic : InstantiateWeaponBase//,IPausebleGetBox
             if (i == 0) pos = new Vector3(_spownAddPos, 0, 0);
             else pos = new Vector3(_spownAddPos * i, 0, 0);
 
-            go.transform.position = _playerSprite.transform.position + pos;
+            go.transform.position = _player.transform.position + pos;
             go.gameObject.GetComponent<WeaponBase>().Power = _attackPower * _mainStatas.Power;
             go.gameObject.transform.localScale = new Vector3(_mainStatas.Eria * _eria, _mainStatas.Eria * _eria, 1);
         }
 
     }
 
-   
+
 }

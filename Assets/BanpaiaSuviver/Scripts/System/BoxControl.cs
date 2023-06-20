@@ -42,12 +42,12 @@ public class BoxControl : MonoBehaviour
 
     [SerializeField] List<GameObject> _timeline = new List<GameObject>();
     PlayableDirector _nowTimeLine = default;
-    [SerializeField] WeaponData weaponManger;
-    [SerializeField] ItemData itemData;
+    [SerializeField] WeaponManaager weaponManger;
+    [SerializeField] ItemManager itemData;
     [SerializeField] LevelUpController _levelUpController;
     [SerializeField] PauseManager _pauseManager;
     [SerializeField] private CanvasManager _canvasManager;
-    
+
 
     //現在開けているか
     private bool _isOpen;
@@ -161,11 +161,11 @@ public class BoxControl : MonoBehaviour
             if (_canvasManager.WeaponLayoutGroup.transform.childCount < _levelUpController.MaxItemAndWeaponNumbers)
             {
                 //すべての武器のレベルを見て、Maxレベル以外のものを選出
-                foreach (var n in _levelUpController.WeaponNames)
+                foreach (var n in weaponManger.WeaponNames)
                 {
-                    if (_levelUpController.WeaponLevels[n].NowLevel + i < _levelUpController.WeaponLevels[n].MaxLevel)
+                    if (weaponManger.WeaponLevels[n].NowLevel + i < weaponManger.WeaponLevels[n].MaxLevel)
                     {
-                        dicWeapon.Add(n, _levelUpController.WeaponLevels[n].NowLevel);
+                        dicWeapon.Add(n, weaponManger.WeaponLevels[n].NowLevel);
                         nameWeapon.Add(n);
                     }
                 }
@@ -173,11 +173,11 @@ public class BoxControl : MonoBehaviour
             else
             {
                 //"現在使用しているアイテム"のアイテムのレベルを見て、Maxレベル以外のものを選出
-                foreach (var n in _levelUpController.OnUseWeapons)
+                foreach (var n in weaponManger.OnUseWeapons)
                 {
-                    if (_levelUpController.WeaponLevels[n].NowLevel + i < _levelUpController.WeaponLevels[n].MaxLevel)
+                    if (weaponManger.WeaponLevels[n].NowLevel + i < weaponManger.WeaponLevels[n].MaxLevel)
                     {
-                        dicWeapon.Add(n, _levelUpController.WeaponLevels[n].NowLevel);
+                        dicWeapon.Add(n, weaponManger.WeaponLevels[n].NowLevel);
                         nameWeapon.Add(n);
                     }
                 }
@@ -187,11 +187,11 @@ public class BoxControl : MonoBehaviour
             if (_canvasManager.ItemLayoutGroup.transform.childCount < _levelUpController.MaxItemAndWeaponNumbers)
             {
                 //すべてのアイテムのレベルを見て、Maxレベル以外のものを選出
-                foreach (var n in _levelUpController.ItemNames)
+                foreach (var n in itemData.ItemNames)
                 {
-                    if (_levelUpController.ItemLevels[n].NowLevel + i < _levelUpController.ItemLevels[n].MaxLevel)
+                    if (itemData.ItemLevels[n].NowLevel + i < itemData.ItemLevels[n].MaxLevel)
                     {
-                        dicItem.Add(n, _levelUpController.ItemLevels[n].NowLevel);
+                        dicItem.Add(n, itemData.ItemLevels[n].NowLevel);
                         nameItem.Add(n);
                     }
                 }
@@ -199,11 +199,11 @@ public class BoxControl : MonoBehaviour
             else
             {
                 //"現在使用しているアイテム"のアイテムのレベルを見て、Maxレベル以外のものを選出
-                foreach (var n in _levelUpController.OnUseItems)
+                foreach (var n in itemData.OnUseItems)
                 {
-                    if (_levelUpController.ItemLevels[n].NowLevel + i < _levelUpController.ItemLevels[n].MaxLevel)
+                    if (itemData.ItemLevels[n].NowLevel + i < itemData.ItemLevels[n].MaxLevel)
                     {
-                        dicItem.Add(n, _levelUpController.ItemLevels[n].NowLevel);
+                        dicItem.Add(n, itemData.ItemLevels[n].NowLevel);
                         nameItem.Add(n);
                     }
                 }
@@ -228,7 +228,7 @@ public class BoxControl : MonoBehaviour
                 var r = UnityEngine.Random.Range(0, nameWeapon.Count);
 
                 //武器の次のステータスを持ってくる。
-                WeaponInforMaition weaponInformaition = weaponManger.GetInfomaitionData((dicWeapon[nameWeapon[r]] + 1), nameWeapon[r]);
+                WeaponInforMaition weaponInformaition = weaponManger.weaponData.GetInfomaitionData((dicWeapon[nameWeapon[r]] + 1), nameWeapon[r]);
 
                 //レベルアップする武器のパネルをだす
                 GameObject panel = _canvasManager.NameOfInformationPanel[nameWeapon[r]];
@@ -240,24 +240,24 @@ public class BoxControl : MonoBehaviour
                 text.text = weaponInformaition.Te;
 
                 //武器のパネルのレベルの表記Texttを更新
-                if (_levelUpController.WeaponLevels[nameWeapon[r]].NowLevel > 0)
+                if (weaponManger.WeaponLevels[nameWeapon[r]].NowLevel > 0)
                 {
                     var text2 = panel.transform.GetChild(0).GetComponent<Text>();
-                    text2.text = "Level:" + (_levelUpController.WeaponLevels[nameWeapon[r]].NowLevel + 1).ToString();
+                    text2.text = "Level:" + (weaponManger.WeaponLevels[nameWeapon[r]].NowLevel + 1).ToString();
                 }
 
                 _nowChoiseBoxWeaponOrItemName.Add(nameWeapon[r]);
                 _canvasManager.NameOfIconPanelUseBox[nameWeapon[r]].transform.position = _boxIconPos[i].position;
                 _choiseItemInformationPanel.Add(_canvasManager.NameOfInformationPanel[nameWeapon[r]]);
 
-                Debug.Log("獲得したのは+"+nameWeapon[r]);
+                Debug.Log("獲得したのは+" + nameWeapon[r]);
             }
             else if (randamItemOrWeapon == 1 || nameWeapon.Count == 0)
             {
                 var r = UnityEngine.Random.Range(0, nameItem.Count);
 
                 //アイテムの次のステータスを持ってくる。
-                ItemInforMaition itemInformaition = itemData.GetInfomaitionData(dicItem[nameItem[r]] + 1, nameItem[r]);
+                ItemInforMaition itemInformaition = itemData.ItemData.GetInfomaitionData(dicItem[nameItem[r]] + 1, nameItem[r]);
 
                 //レベルアップする武器のパネルをだす
                 GameObject panel = _canvasManager.NameOfInformationPanel[nameItem[r]];
@@ -268,10 +268,10 @@ public class BoxControl : MonoBehaviour
                 text.text = itemInformaition.Te;
 
                 //武器のパネルのレベルの表記Texttを更新
-                if (_levelUpController.ItemLevels[nameItem[r]].NowLevel > 0)
+                if (itemData.ItemLevels[nameItem[r]].NowLevel > 0)
                 {
                     var text2 = panel.transform.GetChild(0).GetComponent<Text>();
-                    text2.text = "Level:" + (_levelUpController.ItemLevels[nameItem[r]].NowLevel + 1).ToString();
+                    text2.text = "Level:" + (itemData.ItemLevels[nameItem[r]].NowLevel + 1).ToString();
                 }
                 _nowChoiseBoxWeaponOrItemName.Add(nameItem[r]);
 
@@ -309,12 +309,12 @@ public class BoxControl : MonoBehaviour
             _nowChoiseBoxWeaponOrItemName.RemoveAt(0);
 
             //武器かアイテムのレベルアップ
-            if (_levelUpController.ItemNames.Contains(n))
+            if (itemData.ItemNames.Contains(n))
             {
                 _levelUpController.ItemLevelUp(n, 1);
                 _levelUpBaseItems[n].LevelUp();
             }
-            else if (_levelUpController.WeaponNames.Contains(n))
+            else if (weaponManger.WeaponNames.Contains(n))
             {
                 _levelUpController.WeaponLevelUp(n, 1);
                 _levelUpBaseWeapons[n].LevelUp();
@@ -359,7 +359,7 @@ public class BoxControl : MonoBehaviour
         _choiseItemInformationPanel[0].SetActive(false);
         _choiseItemInformationPanel.RemoveAt(0);
 
-        if (_nowChoiseBoxWeaponOrItemName.Count > 0)  _nowChoiseBoxWeaponOrItemName.RemoveAt(0);
+        if (_nowChoiseBoxWeaponOrItemName.Count > 0) _nowChoiseBoxWeaponOrItemName.RemoveAt(0);
 
         //演出を続行か終わりか判断
         if (_choiseItemInformationPanel.Count == 0)
