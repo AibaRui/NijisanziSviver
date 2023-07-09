@@ -372,19 +372,3 @@ public class ItemLevelDate
 
 }
 
-public class WeaponLevelData
-{
-    private int _maxLevel;
-
-    private int _nowLevel;
-
-    public int MaxLevel { get => _maxLevel; }
-
-    public int NowLevel { get => _nowLevel; set => _nowLevel = value; }
-
-    public WeaponLevelData(int maxLevel, int nowLevel)
-    {
-        this._maxLevel = maxLevel;
-        this._nowLevel = nowLevel;
-    }
-}

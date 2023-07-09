@@ -14,14 +14,10 @@ public class ScritablWeapon : ScriptableObject
     [Header("武器の生成処理を行うプレハブ")]
     [SerializeField] private GameObject _instanceObject;
 
-    [Header("InGameで使うアイコン")]
-    [SerializeField] private GameObject _iconUseUI;
+    [Header("アイコン用のスプライト")]
+    [SerializeField] private Sprite _sprite;
 
-    [Header("Boxで使うIcon")]
-    [SerializeField] GameObject _iconUseBox;
 
-    [Header("レベルアップ時に出すボタン")]
-    [SerializeField] GameObject _levelUpButtun;
 
     [Header("レベルデータのTextAsset")]
     [SerializeField] private TextAsset _levelData;
@@ -29,16 +25,30 @@ public class ScritablWeapon : ScriptableObject
     [Header("情報のTextAsset")]
     [SerializeField] private TextAsset _infoData;
 
+    [Header("======進化======")]
+
+    [Header("進化後の名前")]
+    [Tooltip("進化後の名前")] [SerializeField] protected string _evolutionWeaponName = "";
+
+    [Header("進化に必要なアイテム")]
+    [SerializeField] private ScritableItem _evolutionItem;
+
+    [Header("進化後のアイコンのSprite")]
+    [SerializeField] Sprite _evolutionSprite;
+
+
+    public Sprite Sprite => _sprite;
+    public ScritableItem NeedEvolutionItem => _evolutionItem;
     public string WeaponName => _weaponName;
 
-    public GameObject LevelUpButtun => _levelUpButtun;
     public int MaxLevel => _maxLevel;
 
-    public GameObject IconInGameUI => _iconUseUI;
-    public GameObject IconBox => _iconUseBox;
 
     public GameObject InstanceObject => _instanceObject;
     public TextAsset LevelData => _levelData;
     public TextAsset InfoData => _infoData;
 
+
+    public Sprite EvolutionSprite => _evolutionSprite;
+    public string evolutionWeaponName => _evolutionWeaponName;
 }

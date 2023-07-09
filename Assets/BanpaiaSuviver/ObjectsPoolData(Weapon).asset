@@ -10,38 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e98e62ab93c81e14fbcf1a7ac7816ab5, type: 3}
-  m_Name: ObjectsPoolData
+  m_Name: ObjectsPoolData(Weapon)
   m_EditorClassIdentifier: 
   data:
-  - Name: LowExp
-    objectType: 0
-    objectPrefab: {fileID: 631016461651619579, guid: a4c448d8fb44b944b9121303d2d6060c, type: 3}
-    objectMaxCount: 200
-  - Name: MidleExp
-    objectType: 1
-    objectPrefab: {fileID: 6925009634290390692, guid: 1374dc6b2995c614d8c0e9031d03d559, type: 3}
-    objectMaxCount: 200
-  - Name: HightExp
-    objectType: 2
-    objectPrefab: {fileID: 1918535927564107872, guid: cc608bd96f9f6954b94c14a0d8284595, type: 3}
-    objectMaxCount: 50
-  - Name: Mameneko
-    objectType: 3
-    objectPrefab: {fileID: 503758088958004492, guid: 5cbf6bc7a1599164b8e9045bdf964849, type: 3}
-    objectMaxCount: 50
-  - Name: Gundou
-    objectType: 4
-    objectPrefab: {fileID: 285721018867637009, guid: 5c75d42af6e4a3d418b8092516beec00, type: 3}
-    objectMaxCount: 50
-  - Name: Masyumaro
-    objectType: 5
-    objectPrefab: {fileID: 5866857995571872514, guid: 0b53f109747a75242befccb57af12add, type: 3}
-    objectMaxCount: 50
-  - Name: Kuzuha
-    objectType: 6
-    objectPrefab: {fileID: 7277779499287316083, guid: c81eacff7bce9d442909c67e95945224, type: 3}
-    objectMaxCount: 50
-  - Name: Weapon_Knife
+  - Name: Knife
     objectType: 7
     objectPrefab: {fileID: 8000520379871562951, guid: 9e93485b115940d43843c2fd98a32b56, type: 3}
     objectMaxCount: 50
@@ -73,11 +45,7 @@ MonoBehaviour:
     objectType: 14
     objectPrefab: {fileID: 2917465559008100927, guid: eb73334046d84be4391812234c2f4294, type: 3}
     objectMaxCount: 2
-  - Name: Box
+  - Name: E_Knife
     objectType: 15
-    objectPrefab: {fileID: 1160184838716361156, guid: 2b6adf290ce66b649afd91f6385a04ca, type: 3}
-    objectMaxCount: 5
-  - Name: Heal
-    objectType: 16
-    objectPrefab: {fileID: 7517392665403352980, guid: ed743c40c51ebfc4a8f76e6cf219046b, type: 3}
-    objectMaxCount: 40
+    objectPrefab: {fileID: 8000520379871562951, guid: d77169bf541b7284ba5c72bc93bdd41a, type: 3}
+    objectMaxCount: 50

@@ -43,6 +43,7 @@ public abstract class InstantiateWeaponBase : MonoBehaviour
     protected bool _isPause = false;
     protected bool _isLevelUpPause = false;
     protected bool _isPauseGetBox = false;
+    protected bool _isEvolution = false;
 
     Animator _anim;
 
@@ -50,14 +51,15 @@ public abstract class InstantiateWeaponBase : MonoBehaviour
 
     protected IEnumerator _instantiateCorutin;
 
-
+    protected WeaponManaager _weaponManaager;
     protected ObjectPool _objectPool;
     protected BoxControl _boxControl;
     protected MainStatas _mainStatas;
     protected LevelUpController _levelUpController;
     protected WeaponData _weaponData;
     protected PauseManager _pauseManager = default;
-
+    public bool IsEvolution => _isEvolution;
+    public WeaponManaager WeaponManager { get => _weaponManaager; set => _weaponManaager = value; }
     public GameObject Player { get => _player; set => _player = value; }
 
     public ObjectPool ObjectPool { get => _objectPool; set => _objectPool = value; }
@@ -104,7 +106,27 @@ public abstract class InstantiateWeaponBase : MonoBehaviour
         _levelUpController.WeaponLevelUp(_weaponName, _level);
     }
 
+    /// <summary>
+    /// 進化した時のステータス設定
+    /// </summary>
+    /// <param name="weaponName"></param>
+    public void Evolution(string weaponName)
+    {
+        _isEvolution = true;
+        SetEvolutionSystem();
 
+        _weaponStats = _weaponData.GetData(_level+1, weaponName);
+        _attackPower = _weaponStats.Power;
+        _coolTime = _weaponStats.CoolTime;
+        _eria = _weaponStats.Eria;
+        _speed = _weaponStats.Speed;
+        _number = _weaponStats.Number;
+    }
+
+    public virtual void SetEvolutionSystem()
+    {
+
+    }
 
     // protected abstract void SetPower();
 

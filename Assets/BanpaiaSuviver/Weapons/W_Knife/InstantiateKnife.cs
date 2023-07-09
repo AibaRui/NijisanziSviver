@@ -14,6 +14,10 @@ public class InstantiateKnife : InstantiateWeaponBase//,IPausebleGetBox
     Vector2 dirSave = new Vector2(1, 0);
 
 
+    public override void SetEvolutionSystem()
+    {
+
+    }
 
     void Update()
     {
@@ -70,7 +74,19 @@ public class InstantiateKnife : InstantiateWeaponBase//,IPausebleGetBox
             float randamX = Random.Range(0.2f, 1);
             float randamY = Random.Range(-1.3f, 1.3f);
 
-            var go = _objectPool.UseObject(_player.transform.position, PoolObjectType.Knife);
+            GameObject go = default;
+
+            if (_isEvolution)
+            {
+                go = _objectPool.UseObject(_player.transform.position, PoolObjectType.EW_Knife);
+
+            }
+            else
+            {
+                go = _objectPool.UseObject(_player.transform.position, PoolObjectType.Knife);
+                Debug.Log("F");
+            }
+
             go.transform.position = _player.transform.position + new Vector3(randamX, randamY, 0);
             go.transform.up = dirSave;
             go.gameObject.GetComponent<WeaponBase>().Power = _attackPower * _mainStatas.Power;
@@ -83,6 +99,8 @@ public class InstantiateKnife : InstantiateWeaponBase//,IPausebleGetBox
         _isInstanciateEnd = true;
         _instantiateCorutin = null;
     }
+
+
 
 
     //private void OnEnable()

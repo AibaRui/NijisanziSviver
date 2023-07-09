@@ -6,16 +6,28 @@ using System;
 
 public class ObjectPool : MonoBehaviour
 {
-    [SerializeField]
     private ObjectsPoolData _objectsPoolData = default;
+
+    [SerializeField]
+    private List<ObjectsPoolData> _poolDatas = new List<ObjectsPoolData>();
+
+    private ObjectsPoolData _addObjectPoolData = default;
 
     private List<Pool> _pool = new List<Pool>();
     private int _poolCountIndex = 0;
 
+    private int _poolAddCountIndex = 0;
+
     void Awake()
     {
-        _poolCountIndex = 0;
-        CreatePool();
+        foreach (var data in _poolDatas)
+        {
+            _poolCountIndex = 0;
+            _objectsPoolData = data;
+            CreatePool();
+        }
+
+
         //デバッグ用
         //_pool.ForEach(x => Debug.Log($"オブジェクト名:{x.Object.name} 種類:{x.Type}"));
     }
@@ -43,6 +55,8 @@ public class ObjectPool : MonoBehaviour
         CreatePool();
     }
 
+
+
     /// <summary>
     /// オブジェクトを使いたいときに呼び出す関数
     /// </summary>
@@ -67,8 +81,23 @@ public class ObjectPool : MonoBehaviour
             }
         }
 
+        GameObject newObj = default;
 
-        var newObj = Instantiate(Array.Find(_objectsPoolData.Data, x => x.Type == objectType).Prefab, this.transform);
+        foreach (var a in _poolDatas)
+        {
+            foreach (var t in a.Data)
+            {
+                if (t.Type == objectType)
+                {
+                    //newObj = Instantiate(Array.Find(a.Data, x => x.Type == objectType).Prefab, this.transform);
+                    newObj = Instantiate(t.Prefab, this.transform);
+                    break;
+                }
+            }
+        }
+
+       // Debug.Log(newObj.name);
+
         newObj.transform.position = position;
         newObj.SetActive(true);
         _pool.Add(new Pool { Object = newObj, Type = objectType });
@@ -112,6 +141,16 @@ public enum PoolObjectType
     Book,
     Hiyoko,
     Ninniku,
+
+    //EvolutionWeapon
+    EW_Knife,
+    EW_IceMagick,
+    EW_Bomb,
+    EW_Baran,
+    EW_Thunder,
+    EW_Book,
+    EW_Hiyoko,
+    EW_Ninniku,
 
     //Box
     Box,

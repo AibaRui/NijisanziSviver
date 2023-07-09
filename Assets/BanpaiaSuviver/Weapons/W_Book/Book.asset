@@ -15,8 +15,14 @@ MonoBehaviour:
   _weaponName: "\u672C"
   _maxLevel: 8
   _instanceObject: {fileID: 311477738525259807, guid: a1ea4859763e6d048b82bb08eb122e61, type: 3}
+  _sprite: {fileID: 21300000, guid: 69b77194c7159e845b70dda47298472f, type: 3}
   _iconUseUI: {fileID: 3922603938762452303, guid: 8c75ce915179a824998af4c775d343c0, type: 3}
   _iconUseBox: {fileID: 5970721060306205640, guid: 75cf11e75f61a394fadbe6993880143c, type: 3}
   _levelUpButtun: {fileID: 8004669328322343764, guid: 7ff1dc1b5fe16934b870727c3046fe11, type: 3}
   _levelData: {fileID: 4900000, guid: ed0d0791a2088cb45ada5dcb0002fd06, type: 3}
   _infoData: {fileID: 4900000, guid: 00a7a3c1eca4a0a4ebeb5d44fe760428, type: 3}
+  _evolutionWeaponName: "\u3042"
+  _evolutionItem: {fileID: 11400000, guid: 75d1e741f20e28e4fa6a6b0ede648092, type: 2}
+  _evolutionSprite: {fileID: 21300000, guid: 69b77194c7159e845b70dda47298472f, type: 3}
+  _evolutionLevelData: {fileID: 0}
+  _evolutionInfoData: {fileID: 0}

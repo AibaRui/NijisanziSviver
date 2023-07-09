@@ -41,6 +41,13 @@ public class CanvasManager : MonoBehaviour
     /// <summary>武器、アイテムの名前をKeyにとりパネル画像を持つ</summary>
     Dictionary<string, GameObject> _nameOfInformationPanel = new Dictionary<string, GameObject>();
 
+    /// <summary>進化武器のパネル</summary>
+    Dictionary<string,GameObject> _nameOfEvolutionWeaponPanel = new Dictionary<string, GameObject>();
+    /// <summary>Box用。進化武器のアイコン</summary>
+    Dictionary<string, GameObject> _nameOfEvolutionWeaponIconBox = new Dictionary<string, GameObject>();
+
+    public Dictionary<string, GameObject> NameOfEvolutionWeaponPanel { get => _nameOfEvolutionWeaponPanel; set => _nameOfEvolutionWeaponPanel = value; }
+    public Dictionary<string, GameObject> _NameOfEvolutionWeaponIconBox { get => _nameOfEvolutionWeaponIconBox; set => _nameOfEvolutionWeaponIconBox = value; }
 
     public Dictionary<string, GameObject> NameOfIconPanelUseBox { get => _nameOfIconPaneUseBox; set => _nameOfIconPaneUseBox = value; }
     public Dictionary<string, GameObject> NameOfIconPanelUseUI { get => _nameOfIconPaneUseUI; set => _nameOfIconPaneUseUI = value; }

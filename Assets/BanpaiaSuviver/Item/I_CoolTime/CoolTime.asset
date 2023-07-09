@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CoolTime
   m_EditorClassIdentifier: 
   _itemName: "\u30AF\u30FC\u30EB\u30BF\u30A4\u30E0"
-  _maxLevel: 5
+  _maxLevel: 1
   _statasTextAssets: {fileID: 4900000, guid: 39a9c66abaad4d14ca78b099c1355996, type: 3}
   _infoTextAssets: {fileID: 4900000, guid: 8ca751ba484cf014884a4ef8dff6d641, type: 3}
   _itemPrefab: {fileID: 1121533925732205656, guid: d9e27d6218d30d94f82df14492023288, type: 3}

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e98e62ab93c81e14fbcf1a7ac7816ab5, type: 3}
+  m_Name: ObjectsPoolData(Enemy)
+  m_EditorClassIdentifier: 
+  data:
+  - Name: Mameneko
+    objectType: 3
+    objectPrefab: {fileID: 503758088958004492, guid: 5cbf6bc7a1599164b8e9045bdf964849, type: 3}
+    objectMaxCount: 50
+  - Name: Gundou
+    objectType: 4
+    objectPrefab: {fileID: 285721018867637009, guid: 5c75d42af6e4a3d418b8092516beec00, type: 3}
+    objectMaxCount: 50
+  - Name: Masyumaro
+    objectType: 5
+    objectPrefab: {fileID: 5866857995571872514, guid: 0b53f109747a75242befccb57af12add, type: 3}
+    objectMaxCount: 50
+  - Name: Kuzuha
+    objectType: 6
+    objectPrefab: {fileID: 7277779499287316083, guid: c81eacff7bce9d442909c67e95945224, type: 3}
+    objectMaxCount: 50

@@ -96,8 +96,15 @@ public class WeaponData
         if (_levelData.ContainsKey(key))
         {
             return _levelData[key];
-        }
-        Debug.LogError($"指定されたレベルは存在しません。name:{key}/　level: {level} ");
+        }   //通常のレベルアップのKeyを探す
+
+        if (_levelData.ContainsKey(weaponName))
+        {
+            return _levelData[weaponName];  
+        }   //進化のKeyを探す
+
+
+        Debug.LogError($"指定されたレベル、もしくは進化武器は存在しません。name:{key}/　level: {level} ");
         return default;
     }
 

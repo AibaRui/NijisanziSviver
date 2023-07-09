@@ -29,6 +29,8 @@ public class BoxControl : MonoBehaviour
     [Header("アイコンの親オブジェクト")]
     [SerializeField] private Transform _iconParent;
 
+    [SerializeField] private GameObject _noGetButtun;
+
     //現在使用しているアイテム等の詳細パネル
     List<GameObject> _choiseItemInformationPanel = new List<GameObject>();
     //現在使用しているアイテム等の名前
@@ -53,6 +55,11 @@ public class BoxControl : MonoBehaviour
     private bool _isOpen;
     //のこり回す回数
     private int _numRemaining;
+
+    /// <summary>アイテムを何回受け取ったかを数える</summary>
+    private int _countGet = 0;
+
+    private Dictionary<int, bool> _type = new Dictionary<int, bool>();
 
     private List<int> _numRemainingGetNum = new List<int>();
 
@@ -130,6 +137,11 @@ public class BoxControl : MonoBehaviour
             _numRemainingGetNum.Add(num);
             return;
         }
+
+        _type.Clear();
+
+        _countGet = 0;
+
         _isOpen = true;
 
         //演出タイムラインをランダムで再生
@@ -141,9 +153,24 @@ public class BoxControl : MonoBehaviour
         _boxpanel.SetActive(true);
         _isGetBox = true;
 
+        var canEvolutionWeapon = weaponManger.CheckWeaponCanEvolution();
+
         //宝箱の個数分だけ回す
         for (int i = 0; i < num; i++)
         {
+            if (canEvolutionWeapon.Length > i)
+            {
+                _nowChoiseBoxWeaponOrItemName.Add(canEvolutionWeapon[i]);
+                _canvasManager._NameOfEvolutionWeaponIconBox[canEvolutionWeapon[i]].transform.position = _boxIconPos[i].position;
+                _choiseItemInformationPanel.Add(_canvasManager.NameOfEvolutionWeaponPanel[canEvolutionWeapon[i]]);
+                _type.Add(i, true);
+                _noGetButtun.SetActive(false);
+                continue;
+            }
+            _type.Add(i, false);
+            _noGetButtun.SetActive(true);
+
+
             //レベルMax以外の武器を入れておく仮Dictionary
             Dictionary<string, int> dicWeapon = new Dictionary<string, int>();
 
@@ -292,15 +319,24 @@ public class BoxControl : MonoBehaviour
     {
         _isGetBox = false;
         _choiseItemInformationPanel[0].transform.position = _boxInformationPanelPos.transform.position;
+        _choiseItemInformationPanel[0].SetActive(true);
     }
 
     public void BoxButtunGetItem()
     {
         //先頭を画面外に出し、リストから削除
         _choiseItemInformationPanel[0].transform.position = _posEndPos.position;
-        _choiseItemInformationPanel[0].GetComponent<Button>().enabled = true;
+
+
+        if (!_type[_countGet])
+        {
+            _choiseItemInformationPanel[0].GetComponent<Button>().enabled = true;
+        }
+
+
         _choiseItemInformationPanel[0].SetActive(false);
         _choiseItemInformationPanel.RemoveAt(0);
+
 
         //Listの中身が空ではないかどうかの確認
         if (_nowChoiseBoxWeaponOrItemName.Count > 0)
@@ -308,16 +344,23 @@ public class BoxControl : MonoBehaviour
             string n = _nowChoiseBoxWeaponOrItemName[0];
             _nowChoiseBoxWeaponOrItemName.RemoveAt(0);
 
-            //武器かアイテムのレベルアップ
-            if (itemData.ItemNames.Contains(n))
+            if (!_type[_countGet])
             {
-                _levelUpController.ItemLevelUp(n, 1);
-                _levelUpBaseItems[n].LevelUp();
+                //武器かアイテムのレベルアップ
+                if (itemData.ItemNames.Contains(n))
+                {
+                    _levelUpController.ItemLevelUp(n, 1);
+                    _levelUpBaseItems[n].LevelUp();
+                }
+                else if (weaponManger.WeaponNames.Contains(n))
+                {
+                    _levelUpController.WeaponLevelUp(n, 1);
+                    _levelUpBaseWeapons[n].LevelUp();
+                }
             }
-            else if (weaponManger.WeaponNames.Contains(n))
+            else
             {
-                _levelUpController.WeaponLevelUp(n, 1);
-                _levelUpBaseWeapons[n].LevelUp();
+                weaponManger.Evolution(n);
             }
         }
 
@@ -348,6 +391,17 @@ public class BoxControl : MonoBehaviour
         else        //次の物をセット
         {
             _choiseItemInformationPanel[0].transform.position = _boxInformationPanelPos.transform.position;
+
+            _countGet++;
+
+            if (_type[_countGet])
+            {
+                _noGetButtun.SetActive(false);
+            }
+            else
+            {
+                _noGetButtun.SetActive(true);
+            }
         }
     }
 
@@ -391,6 +445,17 @@ public class BoxControl : MonoBehaviour
         else        //次の物をセット
         {
             _choiseItemInformationPanel[0].transform.position = _boxInformationPanelPos.transform.position;
+
+            _countGet++;
+
+            if (_type[_countGet])
+            {
+                _noGetButtun.SetActive(false);
+            }
+            else
+            {
+                _noGetButtun.SetActive(true);
+            }
         }
     }
 }

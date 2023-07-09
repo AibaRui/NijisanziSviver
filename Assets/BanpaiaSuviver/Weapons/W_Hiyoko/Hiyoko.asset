@@ -15,8 +15,14 @@ MonoBehaviour:
   _weaponName: "\u30BB\u30D0\u30B9"
   _maxLevel: 7
   _instanceObject: {fileID: 5193294811071034826, guid: 93b652d4299775f4991c6a436a14d544, type: 3}
+  _sprite: {fileID: -757634128, guid: 9014c8ad53705034fa76d1d86997a232, type: 3}
   _iconUseUI: {fileID: 1014623134739546758, guid: 49d3501e93700e842ab66787de91c7eb, type: 3}
   _iconUseBox: {fileID: 2097529875949791514, guid: 42a16e420bc8eea4c8695d48ff8dea3e, type: 3}
   _levelUpButtun: {fileID: 3898325979833475188, guid: 13961f41a2182684c883c96ff08bf961, type: 3}
   _levelData: {fileID: 4900000, guid: fc86ba7928ec1224d825703c24315e31, type: 3}
   _infoData: {fileID: 4900000, guid: 229a24fc3332df34ebf4b85e90a2a3ad, type: 3}
+  _evolutionWeaponName: "\u3044"
+  _evolutionItem: {fileID: 11400000, guid: 75d1e741f20e28e4fa6a6b0ede648092, type: 2}
+  _evolutionSprite: {fileID: -757634128, guid: 9014c8ad53705034fa76d1d86997a232, type: 3}
+  _evolutionLevelData: {fileID: 0}
+  _evolutionInfoData: {fileID: 0}
