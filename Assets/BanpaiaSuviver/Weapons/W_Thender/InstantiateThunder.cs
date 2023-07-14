@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InstantiateThunder : InstantiateWeaponBase//,IPausebleGetBox
 {
@@ -9,12 +10,32 @@ public class InstantiateThunder : InstantiateWeaponBase//,IPausebleGetBox
     /// <summary>—‹‚ğ—‚Æ‚·”ÍˆÍ‚Ì”¼ŒaY</summary>
     [SerializeField] float _sizeY;
 
+    [SerializeField] private Text _text;
+
+    [SerializeField] private AttackThunderEvolution _evolutionWeapon;
+
     /// <summary>UŒ‚‰Â”\‚©‚Ç‚¤‚©</summary>
     bool _isAttack = false;
 
     /// <summary>ˆê‰ñ‚ÌUŒ‚‚Åo‚·•Ší‚ğAo‚µI‚¦‚½‚©‚Ç‚¤‚©</summary>
     bool _isInstanciateEnd = true;
 
+
+    public override void SetEvolutionSystem()
+    {
+        var go = Instantiate(_evolutionWeapon);
+        go.TryGetComponent<AttackThunderEvolution>(out AttackThunderEvolution attack);
+
+        _text.gameObject.SetActive(true);
+        attack.AttackPower = _attackPower;
+        attack.MainStatas = _mainStatas;
+        attack.ObjectPool = _objectPool;
+        attack.PauseManager = _pauseManager;
+        attack.Init(_player.transform);
+        attack.Text = _text;
+
+        go.transform.position = _player.transform.position;
+    }
 
     void Update()
     {
@@ -70,5 +91,5 @@ public class InstantiateThunder : InstantiateWeaponBase//,IPausebleGetBox
         _instantiateCorutin = null;
     }
 
-   
+
 }

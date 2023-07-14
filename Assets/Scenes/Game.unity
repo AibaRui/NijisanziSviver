@@ -2640,11 +2640,8 @@ MonoBehaviour:
   _number: 2
   _sizeX: 10
   _sizeY: 10
---- !u!1 &130961499 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1473748018768362650, guid: 30b793251b858de42b647d161ae814ac, type: 3}
-  m_PrefabInstance: {fileID: 1473748017872556141}
-  m_PrefabAsset: {fileID: 0}
+  _text: {fileID: 0}
+  _evolutionWeapon: {fileID: 0}
 --- !u!1 &136955415
 GameObject:
   m_ObjectHideFlags: 0
@@ -22251,6 +22248,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1574957082}
   m_CullTransparentMesh: 1
+--- !u!1 &1577495203 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1473748018768362650, guid: 30b793251b858de42b647d161ae814ac, type: 3}
+  m_PrefabInstance: {fileID: 1473748017872556141}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1580264501
 GameObject:
   m_ObjectHideFlags: 0
@@ -22434,7 +22436,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isTown: 0
   _speed: 3
-  _playerSprite: {fileID: 130961499}
+  _playerSprite: {fileID: 1577495203}
   _anim: {fileID: 1587899645}
 --- !u!212 &1584953263
 SpriteRenderer:
@@ -26810,7 +26812,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _useWeapons: []
-  _charactorOnlrWeapon: {fileID: 11400000, guid: 8a6ca0dc0b0d35a4b94cd346227a0ede, type: 2}
+  _charactorOnlrWeapon: {fileID: 11400000, guid: 29ff3c74d02d08a408e9259f3d69c356, type: 2}
   _player: {fileID: 1584953258}
   _itemMnager: {fileID: 1950929022}
   _levelUpController: {fileID: 159537776}
