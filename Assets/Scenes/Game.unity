@@ -23861,6 +23861,7 @@ MonoBehaviour:
   _speed: 6
   _number: 1
   _addPower: 8
+  _moveSpeed: 5
   _randamX: 2
 --- !u!4 &1697571198
 Transform:
@@ -26812,7 +26813,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _useWeapons: []
-  _charactorOnlrWeapon: {fileID: 11400000, guid: 29ff3c74d02d08a408e9259f3d69c356, type: 2}
+  _charactorOnlrWeapon: {fileID: 11400000, guid: 54af7952f5fb6754d99f58bb9e101fe3, type: 2}
   _player: {fileID: 1584953258}
   _itemMnager: {fileID: 1950929022}
   _levelUpController: {fileID: 159537776}

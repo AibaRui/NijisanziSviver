@@ -31,9 +31,9 @@ public class InstantiateThunder : InstantiateWeaponBase//,IPausebleGetBox
         attack.MainStatas = _mainStatas;
         attack.ObjectPool = _objectPool;
         attack.PauseManager = _pauseManager;
-        attack.Init(_player.transform);
-        attack.Text = _text;
 
+        attack.Text = _text;
+        attack.Init(_player.transform);
         go.transform.position = _player.transform.position;
     }
 

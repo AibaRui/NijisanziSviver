@@ -17,6 +17,16 @@ public class AttackThunderEvolution : MonoBehaviour
     [Header("武器のアニメーション")]
     [SerializeField] private Animator _anim;
 
+    [Header("スプライト")]
+    [SerializeField] private GameObject _spriteObj;
+
+    [Header("スプライトが右向きだったらTrue")]
+    [SerializeField] private bool _spriteDirIsRight = true;
+
+    [Header("Textを出す位置")]
+    [SerializeField] private List<Transform> _textPos = new List<Transform>();
+
+    [SerializeField] private Rigidbody2D _rb2D;
 
     private Text _text;
 
@@ -27,6 +37,11 @@ public class AttackThunderEvolution : MonoBehaviour
     /// <summary> 移動が終わったかどうか</summary>
     private bool _isMoveEnd = false;
 
+    /// <summary> プレイヤー </summary>
+    private Transform _playerT;
+
+    //Textの位置
+    private int _setTextPos;
 
     /// <summary>Pauseしているかどうか</summary>
     protected bool _isPause = false;
@@ -36,13 +51,10 @@ public class AttackThunderEvolution : MonoBehaviour
     protected bool _isPauseGetBox = false;
 
     private MainStatas _mainStatas;
-
     private ObjectPool _objectPool;
-
     private PauseManager _pauseManager;
 
-    /// <summary> プレイヤー </summary>
-    private Transform _playerT;
+
 
     public Text Text { get => _text; set => _text = value; }
     public float AttackPower { get => _power; set => _power = value; }
@@ -50,9 +62,9 @@ public class AttackThunderEvolution : MonoBehaviour
     public MainStatas MainStatas { get => _mainStatas; set => _mainStatas = value; }
     public PauseManager PauseManager { get => _pauseManager; set => _pauseManager = value; }
 
-    [SerializeField] private Rigidbody2D _rb2D;
 
-    private Vector2 _off;
+
+
 
     public void Init(Transform playerT)
     {
@@ -62,19 +74,14 @@ public class AttackThunderEvolution : MonoBehaviour
         _pauseManager.OnPauseResume += PauseResume;
         _pauseManager.OnLevelUp += LevelUpPauseResume;
 
-        float offSetX = Random.Range(-_moveH, _moveH);
-        float offSetY = Random.Range(-_moveH, _moveH);
-
-        Vector2 randamV = new Vector2(offSetX, offSetY);
-        _nextMovePos = (Vector2)_playerT.position + randamV;
-        _off = new Vector2(offSetX, offSetY);
+        SetNextMovePos();
+        TalkTextSet();
     }
     void OnDisable()
     {
         // OnDisable ではメソッドの登録を解除すること。さもないとオブジェクトが無効にされたり破棄されたりした後にエラーになってしまう。
         _pauseManager.OnPauseResume -= PauseResume;
         _pauseManager.OnLevelUp -= LevelUpPauseResume;
-
     }
 
     private void FixedUpdate()
@@ -82,6 +89,8 @@ public class AttackThunderEvolution : MonoBehaviour
         if (!_isLevelUpPause && !_isPause && !_isPauseGetBox)
         {
             Move();
+            SetSpriteDir();
+            TextMove();
         }
     }
 
@@ -93,28 +102,10 @@ public class AttackThunderEvolution : MonoBehaviour
     {
         if (_isMoveEnd)
         {
-            float offSetX = Random.Range(-_moveH, _moveH);
-            float offSetY = Random.Range(-_moveH, _moveH);
-
-            Vector2 randamV = new Vector2(offSetX, offSetY);
-            _nextMovePos = (Vector2)_playerT.position + randamV;
             _isMoveEnd = false;
 
-            int r = Random.Range(0, 3);
-
-            if(r==0)
-            {
-                _text.text = "すいませーん、やめてくださーい";
-            }
-            else if(r==1)
-            {
-                _text.text = "アババババ";
-            }
-            else
-            {
-                _text.text = "やめてくださーい";
-            }
-            _off = new Vector2(offSetX, offSetY);
+            SetNextMovePos();
+            TalkTextSet();
         }
         else
         {
@@ -125,13 +116,78 @@ public class AttackThunderEvolution : MonoBehaviour
             {
                 _isMoveEnd = true;
             }
+        }
+    }
 
-            _text.gameObject.transform.position = (Vector2)transform.position + _off;
+    public void SetSpriteDir()
+    {
+        if (_spriteDirIsRight)
+        {
+            if (_rb2D.velocity.x > 0)
+            {
+                _spriteObj.transform.localScale = new Vector3(1, 1, 1);
+            }
+            else
+            {
+                _spriteObj.transform.localScale = new Vector3(-1, 1, 1);
+            }
+        }
+        else
+        {
+            if (_rb2D.velocity.x > 0)
+            {
+                _spriteObj.transform.localScale = new Vector3(-1, 1, 1);
+            }
+            else
+            {
+                _spriteObj.transform.localScale = new Vector3(1, 1, 1);
+            }
+        }
+    }
 
-            Debug.Log(Vector2.Distance(transform.position, _nextMovePos));
+    /// <summary>
+    /// 次に移動するべき場所を決める
+    /// </summary>
+    public void SetNextMovePos()
+    {
+        float offSetX = Random.Range(-_moveH, _moveH);
+        float offSetY = Random.Range(-_moveH, _moveH);
+
+        Vector2 randamV = new Vector2(offSetX, offSetY);
+        _nextMovePos = (Vector2)_playerT.position + randamV;
+    }
+
+    /// <summary>
+    /// Textの位置を設定
+    /// </summary>
+    public void TextMove()
+    {
+        _text.gameObject.transform.position = _textPos[_setTextPos].position;
+    }
+
+    /// <summary>
+    /// Textの内容を設定する
+    /// </summary>
+    public void TalkTextSet()
+    {
+        int r = Random.Range(0, 3);
+
+        if (r == 0)
+        {
+            _text.text = "すいませーん、やめてくださーい";
+        }
+        else if (r == 1)
+        {
+            _text.text = "アババババ";
+        }
+        else
+        {
+            _text.text = "お前ら俺を殺す気かぁ！";
         }
 
+        _setTextPos = Random.Range(0, _textPos.Count);
     }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

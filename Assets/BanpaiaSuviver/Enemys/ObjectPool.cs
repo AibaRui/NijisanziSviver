@@ -157,5 +157,6 @@ public enum PoolObjectType
     //
     HealItem,
 
-
+    Slash,
+    W_Slash,
 }

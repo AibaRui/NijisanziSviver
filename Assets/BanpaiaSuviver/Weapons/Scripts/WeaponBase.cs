@@ -10,7 +10,7 @@ public class WeaponBase : MonoBehaviour
     [Header("出してから消すまでの時間")]
     [Tooltip("出してから消すまでの時間")] [SerializeField] private float _lifeTime = 3;
 
-    [Header("時間経過によって消すかどうか")]
+    [Header("時間経過によって非表示にするかどうか")]
     [Tooltip("時間経過によって消すかどうか")] [SerializeField] private bool _isActiveFalse = true;
 
 
@@ -42,7 +42,7 @@ public class WeaponBase : MonoBehaviour
 
 
 
-    Rigidbody2D _rb;
+    protected Rigidbody2D _rb;
     AudioSource _aud;
     Animator _anim;
 

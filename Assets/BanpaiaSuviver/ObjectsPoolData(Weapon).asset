@@ -49,3 +49,7 @@ MonoBehaviour:
     objectType: 15
     objectPrefab: {fileID: 8000520379871562951, guid: d77169bf541b7284ba5c72bc93bdd41a, type: 3}
     objectMaxCount: 50
+  - Name: E_Baran
+    objectType: 18
+    objectPrefab: {fileID: 2435484877810138355, guid: b29f257cf2b7c924e941a54bd244067c, type: 3}
+    objectMaxCount: 50
