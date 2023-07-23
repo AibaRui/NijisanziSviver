@@ -233,5 +233,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lifeTime: 3
   _isActiveFalse: 1
-  _threeHitDestroyLevel: 8
-  _noDestroyLevel: 8
+  _threeHitDestroyLevel: 7
+  _noDestroyLevel: 7

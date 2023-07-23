@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIMaker : MonoBehaviour
 {
@@ -16,6 +17,13 @@ public class UIMaker : MonoBehaviour
 
     [Header("Boxのアイコンの元")]
     [SerializeField] private GameObject _boxIconBase;
+
+    [Header("左上の武器、アイテムのLevelを示すText")]
+    [SerializeField] private TextMeshProUGUI  _levelTextMeshPro;
+
+    [Header("左上の武器、アイテムのLevelを示すTextのOffSet")]
+    [SerializeField] private Vector2 _levelTextMeshProOffSet = new Vector2(0, -17);
+
 
     [SerializeField] private BoxControl _boxControl;
     [SerializeField] private CanvasManager _canvasManager;
@@ -41,6 +49,23 @@ public class UIMaker : MonoBehaviour
     {
 
     }
+
+    public void MakeLevelText(bool isWepaon, int num,string name)
+    {
+        var go = Instantiate(_levelTextMeshPro);
+        _canvasManager.LevelTextOnItemAndWeapon.Add(name, go);
+
+        if (isWepaon)
+        {
+            go.transform.SetParent(_canvasManager.WeaponUIPos[num - 1]);
+        }
+        else
+        {
+            go.transform.SetParent(_canvasManager.ItemUIPos[num - 1]);
+        }
+        go.transform.localPosition = _levelTextMeshProOffSet;
+    }
+
 
     public void PanelMake(string name, Sprite sprite)
     {
@@ -84,7 +109,7 @@ public class UIMaker : MonoBehaviour
         boxIconEvoluton.transform.SetParent(_boxControl.IconParentObject);
     }
 
-    public void EvolutionPanel(string name,string weaponName,string data, Sprite sprite)
+    public void EvolutionPanel(string name, string weaponName, string data, Sprite sprite)
     {
         var panel = Instantiate(_evolutionPanelBase);
         panel.transform.GetChild(4).GetComponent<Image>().sprite = sprite;

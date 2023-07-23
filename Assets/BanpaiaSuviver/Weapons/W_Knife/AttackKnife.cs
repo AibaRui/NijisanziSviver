@@ -20,16 +20,21 @@ public class AttackKnife : WeaponBase//,IPausebleGetBox
                 count++;
                 enemy.Damage(_power);
 
-                if (_level < _noDestroyLevel)
+                if (_level >= _noDestroyLevel)
                 {
-                    if (_level >= _threeHitDestroyLevel && count == 3)
+
+                }
+                else if (_level >= _threeHitDestroyLevel)
+                {
+                    if(count>=3)
                     {
-                        gameObject.SetActive(false);
+                        this.gameObject.SetActive(false);
                     }
-                    else
-                    {
-                        gameObject.SetActive(false);
-                    }
+
+                }
+                else
+                {
+                    this.gameObject.SetActive(false);
                 }
 
             }

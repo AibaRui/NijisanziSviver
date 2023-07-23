@@ -1,8 +1,9 @@
 Name,InforMation
 IceMagic1,氷柱を自身の前後に打ち出す
-IceMagic2,氷柱の攻撃力が40%上がる
-IceMagic3,攻撃範囲が30%上がる
+IceMagic2,氷柱の攻撃力が計40%上がる
+IceMagic3,攻撃範囲が計30%上がる
 IceMagic4,氷柱を前後に、計4つ打ち出す
-IceMagic5,クールタイムが30%短くなる
-IceMagic6,氷柱の攻撃力が40%上がる
+IceMagic5,クールタイムが計30%短くなる
+IceMagic6,氷柱の攻撃力が計80%上がる
 IceMagic7,氷柱を前後に、計6つ打ち出す
+IceMagic8,男の企画！止まれはしない

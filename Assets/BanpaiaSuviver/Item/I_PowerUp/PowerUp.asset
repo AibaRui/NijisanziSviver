@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7fa4aefe85b3434587ab89a50fcc490, type: 3}
   m_Name: PowerUp
   m_EditorClassIdentifier: 
-  _itemName: 
-  _maxLevel: 5
-  _itemPrefab: {fileID: 0}
-  _iconUseBox: {fileID: 0}
-  _iconUseUI: {fileID: 0}
-  _panel: {fileID: 0}
+  _itemName: "\u304B\u3063\u3053\u3044\u3044\u5927\u4EBA"
+  _maxLevel: 3
+  _statasTextAssets: {fileID: 4900000, guid: 6607127bcae52d64ebbebe496b775ef9, type: 3}
+  _infoTextAssets: {fileID: 4900000, guid: d5fd42f89f2a0dc4d84dfec1736cffbb, type: 3}
+  _itemPrefab: {fileID: 7329474085409478715, guid: 7638fe69ab8f84a41b592c0e22c10b3c, type: 3}
+  _sprite: {fileID: 21300000, guid: a0890ed1d18e71540a8ccd32dd3e42a8, type: 3}

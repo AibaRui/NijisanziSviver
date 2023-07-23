@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7fa4aefe85b3434587ab89a50fcc490, type: 3}
   m_Name: NumberUp
   m_EditorClassIdentifier: 
-  _itemName: 
-  _maxLevel: 5
-  _itemPrefab: {fileID: 0}
-  _iconUseBox: {fileID: 0}
-  _iconUseUI: {fileID: 0}
-  _panel: {fileID: 0}
+  _itemName: "\u5897\u3048\u82B8"
+  _maxLevel: 3
+  _statasTextAssets: {fileID: 4900000, guid: ecc700cc94bca48448a95d35f6ca545e, type: 3}
+  _infoTextAssets: {fileID: 4900000, guid: 963920609b8b38a4ea5689f68f630c84, type: 3}
+  _itemPrefab: {fileID: 3910347644765195714, guid: 17a7babc12d473647999ab0f0afa0ab6, type: 3}
+  _sprite: {fileID: 21300000, guid: c77209b1b60ba7f4c8d78badd4858f02, type: 3}

@@ -21,37 +21,19 @@ public class ScritableItem : ScriptableObject
     [Header("アイテムのMonobehaviorプレハブ")]
     [SerializeField] private GameObject _itemPrefab;
 
-    [Header("Boxの演出用のアイコン")]
-    [SerializeField] GameObject _iconUseBox;
+    [Header("アイコン用のスプライト")]
+    [SerializeField] Sprite _sprite;
 
-    [Header("UI用のアイコン")]
-    [SerializeField] GameObject _iconUseUI;
-
-    [Header("レベルアップ用の詳細パネル")]
-    [SerializeField] GameObject _panel;
 
     public TextAsset Statas => _statasTextAssets;
 
     public TextAsset Info => _infoTextAssets;
 
-    public GameObject IconUseBox => _iconUseBox;
 
-    public GameObject IconUseUI => _iconUseUI;
-
-    public GameObject LevelUpButtun => _panel;
+    public Sprite ItemSprite => _sprite;
 
     public int MaxLevel => _maxLevel;
     public string ItemName => _itemName;
     public GameObject ItemPrefab => _itemPrefab;
 
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

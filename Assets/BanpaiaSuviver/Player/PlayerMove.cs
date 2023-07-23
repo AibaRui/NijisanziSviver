@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMove : MonoBehaviour
+[System.Serializable]
+public class PlayerMove
 {
     [Header("街での移動かどうか")]
     [Tooltip("街での移動かどうか")] [SerializeField] private bool _isTown;
@@ -10,20 +11,16 @@ public class PlayerMove : MonoBehaviour
     [Header("移動速度")]
     [Tooltip("移動速度")] [SerializeField] float _speed = 7;
 
-    [Header("プレイヤーのスプライト")]
-    [Tooltip("プレイヤーのスプライト")] [SerializeField] GameObject _playerSprite;
+    private PlayerControl _playerControl;
 
-    [SerializeField]
-    private Animator _anim;
-    //  public Animator Anim { get => _anim; set => value = _anim; }
-    Rigidbody2D _rb;
-    void Start()
+    /// <summary>
+    ///初期化
+    /// </summary>
+    /// <param name="playerControl"></param>
+    public void Init(PlayerControl playerControl)
     {
-        //_anim = _anim.GetComponent<Animator>();
-        _rb = GetComponent<Rigidbody2D>();
+        _playerControl = playerControl;
     }
-
-
 
     public void Move()
     {
@@ -39,11 +36,11 @@ public class PlayerMove : MonoBehaviour
 
             if (h != 0)
             {
-                _anim.SetBool("Move", true);
+                _playerControl.PlayerAnim.SetBool("Move", true);
             }
             else if (h == 0)
             {
-                _anim.SetBool("Move", false);
+                _playerControl.PlayerAnim.SetBool("Move", false);
             }
         }
         else
@@ -52,25 +49,25 @@ public class PlayerMove : MonoBehaviour
 
             if (h != 0 || v != 0)
             {
-                _anim.SetBool("Move", true);
+                _playerControl.PlayerAnim.SetBool("Move", true);
             }
             else if (h == 0 && v == 0)
             {
-                _anim.SetBool("Move", false);
+                _playerControl.PlayerAnim.SetBool("Move", false);
             }
         }
 
-        _rb.velocity = dir * _speed;
+        _playerControl.Rb.velocity = dir * _speed;
 
 
 
         if (h > 0)
         {
-            _playerSprite.transform.localScale = new Vector3(-1, 1, 1);
+            _playerControl.PalyerSprite.transform.localScale = new Vector3(-1, 1, 1);
         }
         else if (h < 0)
         {
-            _playerSprite.transform.localScale = new Vector3(1, 1, 1);
+            _playerControl.PalyerSprite.transform.localScale = new Vector3(1, 1, 1);
         }
     }
 

@@ -38,6 +38,16 @@ public abstract class ItemBase : MonoBehaviour
 
     public abstract void LevelUp();
 
+    public void LevelUpDebugButtun()
+    {
+        if (_maxLevel == _level)
+        {
+            return;
+        }   //Debug—p
+
+        LevelUp();
+    }
+
     //public void LevelUp(int level = 1)
     //{
     //    if (_level < _maxLevel)

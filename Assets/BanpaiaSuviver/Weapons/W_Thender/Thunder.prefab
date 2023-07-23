@@ -147,3 +147,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lifeTime: 0.4
   _isActiveFalse: 1
+  _anims:
+  - {fileID: 684474300658941571}

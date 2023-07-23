@@ -44,7 +44,9 @@ public class WeaponBase : MonoBehaviour
 
     protected Rigidbody2D _rb;
     AudioSource _aud;
-    Animator _anim;
+
+
+    [SerializeField] private List<Animator> _anims = new List<Animator>();
 
     PauseManager _pauseManager = default;
     private void Awake()
@@ -97,7 +99,6 @@ public class WeaponBase : MonoBehaviour
         _pauseManager.OnPauseResume += PauseResume;
         _pauseManager.OnLevelUp += LevelUpPauseResume;
 
-        _anim = gameObject.GetComponent<Animator>();
         _rb = GetComponent<Rigidbody2D>();
         _aud = GetComponent<AudioSource>();
     }
@@ -147,10 +148,11 @@ public class WeaponBase : MonoBehaviour
                 _rb.isKinematic = true;
             }
 
-            if (_anim)
+            foreach (var a in _anims)
             {
-                _anim.enabled = false;
+                a.enabled = false;
             }
+
         }
     }
 
@@ -169,9 +171,9 @@ public class WeaponBase : MonoBehaviour
                 _rb.velocity = _velocityOfLevelUpPause;
             }
 
-            if (_anim)
+            foreach (var a in _anims)
             {
-                _anim.enabled = true;
+                a.enabled = true;
             }
         }
     }
@@ -180,20 +182,21 @@ public class WeaponBase : MonoBehaviour
     {
         if (!_isLevelUpPause && !_isPauseGetBox)
         {
+            _isPause = true;
             if (_rb)
             {
-                _isPause = true;
                 // ë¨ìxÅEâÒì]Çï€ë∂ÇµÅARigidbody Çí‚é~Ç∑ÇÈ
                 _angularVelocity = _rb.angularVelocity;
                 _velocity = _rb.velocity;
                 _rb.Sleep();
                 _rb.isKinematic = true;
-
-                if (_anim)
-                {
-                    _anim.enabled = false;
-                }
             }
+
+            foreach (var a in _anims)
+            {
+                a.enabled = false;
+            }
+
         }
     }
 
@@ -211,10 +214,9 @@ public class WeaponBase : MonoBehaviour
                 _rb.isKinematic = false;
             }
 
-
-            if (_anim)
+            foreach (var a in _anims)
             {
-                _anim.enabled = true;
+                a.enabled = true;
             }
         }
     }
@@ -231,9 +233,9 @@ public class WeaponBase : MonoBehaviour
                 _rb.Sleep();
                 _rb.isKinematic = true;
 
-                if (_anim)
+                foreach (var a in _anims)
                 {
-                    _anim.enabled = false;
+                    a.enabled = false;
                 }
             }
         }
@@ -250,9 +252,9 @@ public class WeaponBase : MonoBehaviour
             }
 
 
-            if (_anim)
+            foreach (var a in _anims)
             {
-                _anim.enabled = true;
+                a.enabled = true;
             }
         }
     }

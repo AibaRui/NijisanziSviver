@@ -12,9 +12,12 @@ public class EvolutionBaran : WeaponBase
 
     private void FixedUpdate()
     {
-        Quaternion r = spriteObj.transform.rotation;
-        r.z += _rotateSpeed;
-        spriteObj.transform.rotation = r;
+        if (!_isPause && !_isLevelUpPause && !_isPauseGetBox)
+        {
+            Quaternion r = spriteObj.transform.rotation;
+            r.z += _rotateSpeed;
+            spriteObj.transform.rotation = r;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

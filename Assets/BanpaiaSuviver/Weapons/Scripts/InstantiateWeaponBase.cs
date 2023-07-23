@@ -71,7 +71,6 @@ public abstract class InstantiateWeaponBase : MonoBehaviour
 
     public WeaponData WeaponData { get => _weaponData; set => _weaponData = value; }
 
-
     public void Init(string name, int maxLevel)
     {
         _weaponName = name;
@@ -82,6 +81,21 @@ public abstract class InstantiateWeaponBase : MonoBehaviour
         _pauseManager.OnLevelUp += LevelUpPauseResume;
 
         _anim = gameObject.GetComponent<Animator>();
+    }
+
+    public void DebugLevelUp()
+    {
+        if (_maxLevel == _level && !_isEvolution)
+        {
+            _weaponManaager.Evolution(_weaponName);
+            return;
+        }  //Debug—p
+        else if (_maxLevel == _level)
+        {
+            return;
+        }   //Debug—p
+
+        LevelUp();
     }
 
     /// <summary>
@@ -115,7 +129,7 @@ public abstract class InstantiateWeaponBase : MonoBehaviour
         _isEvolution = true;
         SetEvolutionSystem();
 
-        _weaponStats = _weaponData.GetData(_level+1, weaponName);
+        _weaponStats = _weaponData.GetData(_level + 1, weaponName);
         _attackPower = _weaponStats.Power;
         _coolTime = _weaponStats.CoolTime;
         _eria = _weaponStats.Eria;

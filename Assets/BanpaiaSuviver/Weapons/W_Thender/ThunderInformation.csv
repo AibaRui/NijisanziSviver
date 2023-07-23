@@ -1,8 +1,9 @@
 Name,InforMation
-Thunder1,落雷を2つ自身の周辺にランダムに落とす
-Thunder2,攻撃力が25%上がる
-Thunder3,クールタイムが30%早くなる
-Thunder4,落雷が1つ増える
-Thunder5,攻撃力が25%上がる
-Thunder6,クールタイムが30%早くなる
-Thunder7,落雷が1つ増える
+Thunder1,落雷を3つ自身の周辺にランダムに落とす
+Thunder2,攻撃力が計25%上がる
+Thunder3,クールタイムが計30%早くなる
+Thunder4,落雷が計1つ増える
+Thunder5,攻撃力が計50%上がる
+Thunder6,クールタイムが計50%早くなる
+Thunder7,落雷が計2つ増える
+Thunder8,葛葉が走りだす。邪魔されると、電撃をくらう

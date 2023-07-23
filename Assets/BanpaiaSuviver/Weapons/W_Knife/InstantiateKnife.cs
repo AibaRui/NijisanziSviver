@@ -72,7 +72,7 @@ public class InstantiateKnife : InstantiateWeaponBase//,IPausebleGetBox
         for (int i = 0; i < num; i++)
         {
             float randamX = Random.Range(0.2f, 1);
-            float randamY = Random.Range(-1.3f, 1.3f);
+            float randamY = Random.Range(-1.5f, 1.5f);
 
             GameObject go = default;
 

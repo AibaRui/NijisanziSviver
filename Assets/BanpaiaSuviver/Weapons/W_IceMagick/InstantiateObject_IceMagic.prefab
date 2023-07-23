@@ -51,7 +51,8 @@ MonoBehaviour:
   _speed: 6
   _number: 1
   _spownAddPos: 4
-  _playerSprite: {fileID: 0}
+  _rikiiti: {fileID: 4417030149776134884, guid: 1b3c124c5e3ad664da8de01b3f51d08a, type: 3}
+  _maimoto: {fileID: 1170540705956163361, guid: 847918b48ff2af64b9b7cba97d558ca4, type: 3}
 --- !u!82 &-4451632078663888981
 AudioSource:
   m_ObjectHideFlags: 0
@@ -61,7 +62,7 @@ AudioSource:
   m_GameObject: {fileID: 3838984096481297274}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4595327444794445418, guid: ae1dbe8ee4d42b341916ce3e352399b5, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1

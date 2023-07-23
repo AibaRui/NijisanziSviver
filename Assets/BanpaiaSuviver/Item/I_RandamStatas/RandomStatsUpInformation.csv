@@ -1,4 +1,4 @@
 Name,InforMation
-RandomStatsUp1,ステータスの1つが10秒毎にランダムで一時的向上
+RandomStatsUp1,10秒間ごとにステータスの1つがランダムで一時向上する。何が上がってるかはわからない
 RandomStatsUp2,向上倍率が20%になる
 RandomStatsUp3,向上倍率が30%になる

@@ -17,6 +17,4 @@ MonoBehaviour:
   _statasTextAssets: {fileID: 4900000, guid: ed54e5fac40de814a8020c251a2f4cd1, type: 3}
   _infoTextAssets: {fileID: 4900000, guid: c1f5de9b39e624b439d2733aa20caac1, type: 3}
   _itemPrefab: {fileID: 5818117203039479281, guid: 2381208727598104a9a533e3d7e9bcaf, type: 3}
-  _iconUseBox: {fileID: 8233215787431449578, guid: 34909419f0c7876428e5938004e78bbb, type: 3}
-  _iconUseUI: {fileID: 4577724452051985049, guid: aee4c52cdecbbda44946f1daf6d110b2, type: 3}
-  _panel: {fileID: 3666462039319451497, guid: f63b16baf18500b40b4754898e15174b, type: 3}
+  _sprite: {fileID: 21300000, guid: f7360a989650da34989728617842e45e, type: 3}

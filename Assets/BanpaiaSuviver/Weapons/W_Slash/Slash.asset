@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Slash
   m_EditorClassIdentifier: 
   _weaponName: "\u6728\u306E\u68D2"
-  _maxLevel: 2
+  _maxLevel: 7
   _instanceObject: {fileID: 4157051339795986840, guid: 56068ad0dbd6f8d4fbfab01440c21bc8, type: 3}
   _sprite: {fileID: 21300000, guid: 3c7c67995d7272144a50398121fd72c3, type: 3}
   _levelData: {fileID: 4900000, guid: 926e01e6e9eaa03479112a6820cdad11, type: 3}

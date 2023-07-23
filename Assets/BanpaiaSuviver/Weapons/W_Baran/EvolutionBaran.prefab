@@ -219,7 +219,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!95 &943006984
 Animator:
   serializedVersion: 4
@@ -254,5 +254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lifeTime: 3
   _isActiveFalse: 1
+  _anims:
+  - {fileID: 943006984}
   spriteObj: {fileID: 1662932380334058944}
   _rotateSpeed: 0.01

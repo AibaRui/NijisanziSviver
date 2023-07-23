@@ -18,6 +18,8 @@ public class WeaponManaager : MonoBehaviour
     [Header("プレイヤー")]
     [SerializeField] private GameObject _player;
 
+    [SerializeField] private DebugMaker debugMaker;
+
     /// <summary>現在使っている武器の名前</summary>
     private List<string> _onUseWeapons = new List<string>();
 
@@ -71,23 +73,38 @@ public class WeaponManaager : MonoBehaviour
     {
         List<string> canEvolutionweapon = new List<string>();
 
+        //進化にアイテムがいらない場合
         foreach (var a in _onUseWeapons)
         {
-            string needItemName = _weaponScritables[a].NeedEvolutionItem.ItemName;
-
             //進化していたら飛ばす
             if (_weapon[a].IsEvolution) continue;
 
             //武器のレベルアップが最大 && 進化に必要なアイテムを持っている
-            if (_weaponsLevel[a].MaxLevel == _weaponsLevel[a].NowLevel && _itemMnager.OnUseItems.Contains(needItemName))
+            if (_weaponsLevel[a].MaxLevel == _weaponsLevel[a].NowLevel)
             {
-                //必要なアイテムがLevelMax
-                if (_itemMnager.ItemLevels[needItemName].MaxLevel == _itemMnager.ItemLevels[needItemName].NowLevel)
-                {
-                    canEvolutionweapon.Add(a);
-                }
+                canEvolutionweapon.Add(a);
             }
         }
+
+
+        //進化にアイテムが必要な場合
+        //foreach (var a in _onUseWeapons)
+        //{
+        //    string needItemName = _weaponScritables[a].NeedEvolutionItem.ItemName;
+
+        //    //進化していたら飛ばす
+        //    if (_weapon[a].IsEvolution) continue;
+
+        //    //武器のレベルアップが最大 && 進化に必要なアイテムを持っている
+        //    if (_weaponsLevel[a].MaxLevel == _weaponsLevel[a].NowLevel && _itemMnager.OnUseItems.Contains(needItemName))
+        //    {
+        //        //必要なアイテムがLevelMax
+        //        if (_itemMnager.ItemLevels[needItemName].MaxLevel == _itemMnager.ItemLevels[needItemName].NowLevel)
+        //        {
+        //            canEvolutionweapon.Add(a);
+        //        }
+        //    }
+        //}
 
         return canEvolutionweapon.ToArray();
     }
@@ -170,12 +187,16 @@ public class WeaponManaager : MonoBehaviour
         button.onClick.AddListener(weaponBase.LevelUp); //武器のレベルアップの処理をボタンに登録  
         button.onClick.AddListener(_levelUpController.EndLevelUp); //レベルアップ終了の処理をボタンに登録
 
+        var debug = Instantiate(debugMaker._buttun);
+        debug.transform.SetParent(debugMaker._weaponLayoutGroup.transform);
+        debug.onClick.AddListener(weaponBase.DebugLevelUp); //武器のレベルアップの処理をボタンに登録  
+        debug.transform.GetChild(0).GetComponent<Text>().text = weapon.WeaponName;
 
         //武器の次のステータスを持ってくる。
-        WeaponInforMaition weaponInformaition = _weaponData.GetInfomaitionData(weapon.MaxLevel+1, weapon.WeaponName);
+        WeaponInforMaition weaponInformaition = _weaponData.GetInfomaitionData(weapon.MaxLevel + 1, weapon.WeaponName);
 
         //進化後のパネルの登録
-        _uIMaker.EvolutionPanel(weapon.WeaponName, weapon.evolutionWeaponName,weaponInformaition.Te, weapon.EvolutionSprite);
+        _uIMaker.EvolutionPanel(weapon.WeaponName, weapon.evolutionWeaponName, weaponInformaition.Te, weapon.EvolutionSprite);
 
         //Box用のアイコンを生成
         _uIMaker.BoxIconMake(weapon.WeaponName, weapon.Sprite);

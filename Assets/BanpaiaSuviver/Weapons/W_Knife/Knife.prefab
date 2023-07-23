@@ -147,6 +147,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifeTime: 3
-  _isDestroy: 0
-  _threeHitDestroyLevel: 8
+  _isActiveFalse: 1
+  _threeHitDestroyLevel: 4
   _noDestroyLevel: 8

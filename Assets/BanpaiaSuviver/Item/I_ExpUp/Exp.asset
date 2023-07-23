@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7fa4aefe85b3434587ab89a50fcc490, type: 3}
   m_Name: Exp
   m_EditorClassIdentifier: 
-  _itemName: 
-  _maxLevel: 5
-  _itemPrefab: {fileID: 0}
-  _iconUseBox: {fileID: 0}
-  _iconUseUI: {fileID: 0}
-  _panel: {fileID: 0}
+  _itemName: "\u5929\u624D"
+  _maxLevel: 3
+  _statasTextAssets: {fileID: 4900000, guid: e30d76c8e8643e14e964f76cb99385ac, type: 3}
+  _infoTextAssets: {fileID: 4900000, guid: 1cf3c42758a28124db22cc2fa46ebcde, type: 3}
+  _itemPrefab: {fileID: 3668649412833123542, guid: be03111c29dd7db42b7c63da152e0bff, type: 3}
+  _sprite: {fileID: 21300000, guid: bc1db1d5fe4889643a91d14d9ba6d631, type: 3}

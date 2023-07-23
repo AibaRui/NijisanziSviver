@@ -7,7 +7,15 @@ public class PlayerControl : MonoBehaviour
     [Header("経験値獲得範囲")]
     [SerializeField] private Transform _gtEria;
 
+    [Header("プレイヤーのスプライト")]
+    [Tooltip("プレイヤーのスプライト")] [SerializeField] GameObject _playerSprite;
+
+    [Header("プレイヤーのアニメーション")]
+    [SerializeField] Animator _anim;
+
+    [Header("===移動設定===")]
     [SerializeField] private PlayerMove _playerMove;
+
     [SerializeField] private PlayerHp _playrHp;
 
     [SerializeField] private MainStatas _mainStatas;
@@ -16,12 +24,17 @@ public class PlayerControl : MonoBehaviour
     private bool _isLevelUpPause = false;
     private bool _isPauseGetBox = false;
 
-    Rigidbody2D _rb;
-    [SerializeField] Animator _anim;
+    private Rigidbody2D _rb;
+
+    public Rigidbody2D Rb => _rb;
+
+    public Animator PlayerAnim { get => _anim; set => _anim = value; }
+    public GameObject PalyerSprite { get => _playerSprite; set => _playerSprite = value; }
+
     void Start()
     {
+        _playerMove.Init(this);
         _rb = GetComponent<Rigidbody2D>();
-       
         _mainStatas.SetGetEria(_gtEria.transform.localScale);
     }
 

@@ -155,6 +155,8 @@ public class BoxControl : MonoBehaviour
 
         var canEvolutionWeapon = weaponManger.CheckWeaponCanEvolution();
 
+        int _evolutionWeaponSelectCount = 0;
+
         //宝箱の個数分だけ回す
         for (int i = 0; i < num; i++)
         {
@@ -165,6 +167,7 @@ public class BoxControl : MonoBehaviour
                 _choiseItemInformationPanel.Add(_canvasManager.NameOfEvolutionWeaponPanel[canEvolutionWeapon[i]]);
                 _type.Add(i, true);
                 _noGetButtun.SetActive(false);
+                _evolutionWeaponSelectCount++;
                 continue;
             }
             _type.Add(i, false);
@@ -185,7 +188,7 @@ public class BoxControl : MonoBehaviour
 
 
             //枠に空きがあったら、LevelMax以外のすべてを選出
-            if (_canvasManager.WeaponLayoutGroup.transform.childCount < _levelUpController.MaxItemAndWeaponNumbers)
+            if (itemData.OnUseItems.Count< _levelUpController.MaxItemAndWeaponNumbers)
             {
                 //すべての武器のレベルを見て、Maxレベル以外のものを選出
                 foreach (var n in weaponManger.WeaponNames)
@@ -211,7 +214,7 @@ public class BoxControl : MonoBehaviour
             }
 
             //上限までアイテムを保有していたら出さない
-            if (_canvasManager.ItemLayoutGroup.transform.childCount < _levelUpController.MaxItemAndWeaponNumbers)
+            if (weaponManger.OnUseWeapons.Count < _levelUpController.MaxItemAndWeaponNumbers)
             {
                 //すべてのアイテムのレベルを見て、Maxレベル以外のものを選出
                 foreach (var n in itemData.ItemNames)
@@ -238,7 +241,7 @@ public class BoxControl : MonoBehaviour
 
 
             //アイテムと武器が何も無かったら、"その他(金、体力回復アイテム)"を出す
-            if (nameWeapon.Count == 0 && nameItem.Count == 0)
+            if (nameWeapon.Count + _evolutionWeaponSelectCount <= i && nameItem.Count + _evolutionWeaponSelectCount <= i)
             {
                 _choiseItemInformationPanel.Add(_lastHealPanel);
                 _lastHealIcons[0].transform.position = _boxIconPos[i].position;
@@ -255,6 +258,7 @@ public class BoxControl : MonoBehaviour
                 var r = UnityEngine.Random.Range(0, nameWeapon.Count);
 
                 //武器の次のステータスを持ってくる。
+                Debug.Log($"{r}*FFFFFFFFF");
                 WeaponInforMaition weaponInformaition = weaponManger.weaponData.GetInfomaitionData((dicWeapon[nameWeapon[r]] + 1), nameWeapon[r]);
 
                 //レベルアップする武器のパネルをだす
@@ -318,13 +322,15 @@ public class BoxControl : MonoBehaviour
     public void EndMove()
     {
         _isGetBox = false;
-        _choiseItemInformationPanel[0].transform.position = _boxInformationPanelPos.transform.position;
+        _choiseItemInformationPanel[0].transform.SetParent(_boxInformationPanelPos.transform);
+         _choiseItemInformationPanel[0].transform.position = _boxInformationPanelPos.transform.position;
         _choiseItemInformationPanel[0].SetActive(true);
     }
 
     public void BoxButtunGetItem()
     {
         //先頭を画面外に出し、リストから削除
+        _boxInformationPanelPos.transform.DetachChildren();
         _choiseItemInformationPanel[0].transform.position = _posEndPos.position;
 
 
@@ -408,6 +414,7 @@ public class BoxControl : MonoBehaviour
     public void BoxButtunNoGetItem()
     {
         //先頭を画面外に出し、リストから削除
+        _boxInformationPanelPos.transform.DetachChildren();
         _choiseItemInformationPanel[0].transform.position = _posEndPos.position;
         _choiseItemInformationPanel[0].GetComponent<Button>().enabled = true;
         _choiseItemInformationPanel[0].SetActive(false);

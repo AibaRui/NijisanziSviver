@@ -168,3 +168,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifeTime: 0.63
+  _isActiveFalse: 1
+  _anims:
+  - {fileID: 4409787122421535311}

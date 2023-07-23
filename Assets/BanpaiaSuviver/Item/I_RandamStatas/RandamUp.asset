@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7fa4aefe85b3434587ab89a50fcc490, type: 3}
   m_Name: RandamUp
   m_EditorClassIdentifier: 
-  _itemName: 
-  _maxLevel: 5
-  _itemPrefab: {fileID: 0}
-  _iconUseBox: {fileID: 0}
-  _iconUseUI: {fileID: 0}
-  _panel: {fileID: 0}
+  _itemName: "\u60C5\u7DD2\u30B8\u30A7\u30C3\u30C8\u30B3\u30FC\u30B9\u30BF\u30FC"
+  _maxLevel: 3
+  _statasTextAssets: {fileID: 4900000, guid: 2d39e46d91fc9eb46b1afde02b458e62, type: 3}
+  _infoTextAssets: {fileID: 4900000, guid: c4989c43466c41e41bd8f32680416fce, type: 3}
+  _itemPrefab: {fileID: 6873350680778889985, guid: c9ef2b47e4c07ed44b8c385f1ddf4cdb, type: 3}
+  _sprite: {fileID: 21300000, guid: e468ccb53a2bebb499acd6ac1051f6d4, type: 3}

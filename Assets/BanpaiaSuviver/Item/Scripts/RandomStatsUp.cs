@@ -33,7 +33,11 @@ public class RandomStatsUp : ItemBase
             LevelUpStatas(_thisStatas);
             Debug.Log(_itemName + "レベルアップ！現在のレベルは" + _level);
 
-            if (_level == 1) StartCoroutine(_corutin);
+            if (_level == 1)
+            {
+                // _corutin = ChangeStatas();
+                StartCoroutine(_corutin);
+            }
         }
         _mainStatas.SetStatsText();
         LevelUpController _levelUpController = FindObjectOfType<LevelUpController>();
@@ -62,61 +66,63 @@ public class RandomStatsUp : ItemBase
             {
                 power = _itemStats.AttackPower * _mainStatas.Power;
                 _mainStatas.ChangeAttackPower(0, 1, power);
-                _showText.text = "Power:+" + power.ToString();
+                if (_showText) _showText.text = "Power:+" + power.ToString();
             }
             else if (r == 1)
             {
                 attackSpeed = _itemStats.AttackSpeed * _mainStatas.AttackSpeed;
                 _mainStatas.ChangeAttackSpeed(0, 1, attackSpeed);
-                _showText.text = "AttackSpeed:+" + attackSpeed.ToString();
+                if (_showText) _showText.text = "AttackSpeed:+" + attackSpeed.ToString();
             }
             else if (r == 2)
             {
                 coolTime = -_itemStats.CoolTime * _mainStatas.CoolTime;
                 _mainStatas.ChangeCoolTIme(0, 1, coolTime);
-                _showText.text = "CoolTime:+" + coolTime.ToString();
+                if (_showText) _showText.text = "CoolTime:+" + coolTime.ToString();
             }
             else if (r == 3)
             {
                 attackEria = _itemStats.AttackEria * _mainStatas.Eria;
                 _mainStatas.ChangeAttackEria(0, 1, attackEria);
-                _showText.text = "AttacEria:+" + attackEria.ToString();
+                if (_showText) _showText.text = "AttacEria:+" + attackEria.ToString();
             }
             else if (r == 4)
             {
                 numbr = (int)_itemStats.Number;
                 _mainStatas.ChangeNumber(0, numbr);
-                _showText.text = "Number:+" + numbr.ToString();
+                if (_showText) _showText.text = "Number:+" + numbr.ToString();
             }
             else if (r == 5)
             {
                 exp = _itemStats.Exp * _mainStatas.ExpUpper;
                 _mainStatas.ChamgeExp(0, 1, exp);
-                _showText.text = "Exp:+" + exp.ToString();
+                if (_showText) _showText.text = "Exp:+" + exp.ToString();
             }
             else if (r == 6)
             {
                 getEria = _itemStats.GetEria * _mainStatas.GetEria;
                 _mainStatas.ChangeGetEria(0, 1, getEria);
-                _showText.text = "GetEria:+" + getEria.ToString();
+                if (_showText) _showText.text = "GetEria:+" + getEria.ToString();
             }
             else if (r == 7)
             {
                 maxHp = _itemStats.MaxHp * _mainStatas.MaxHp;
                 _mainStatas.ChangeMaxHp(0, 1, maxHp);
-                _showText.text = "MaxHp:+" + maxHp.ToString();
+                if (_showText) _showText.text = "MaxHp:+" + maxHp.ToString();
             }
             else if (r == 8)
             {
                 dex = _itemStats.Dex * _mainStatas.Dex;
                 _mainStatas.ChangeDex(0, 1, dex);
-                _showText.text = "Dex:+" + dex.ToString();
+                if (_showText) _showText.text = "Dex:+" + dex.ToString();
             }
             else if (r == 9)
             {
                 moveSpeed = _itemStats.MoveSpeed * _mainStatas.MoveSpeed;
                 _mainStatas.ChangeMoveSpeed(0, 1, moveSpeed);
-                _showText.text = "MoveSpeed:+" + moveSpeed.ToString();
+
+
+                if (_showText) _showText.text = "MoveSpeed:+" + moveSpeed.ToString();
             }
             yield return new WaitForSeconds(10);
 
@@ -138,6 +144,7 @@ public class RandomStatsUp : ItemBase
     void OnEnable()
     {
         // 呼んで欲しいメソッドを登録する。
+        _pauseManager = GameObject.FindObjectOfType<PauseManager>();
         _pauseManager.OnPauseResume += PauseResume;
         _pauseManager.OnLevelUp += LevelUpPauseResume;
         _corutin = ChangeStatas();

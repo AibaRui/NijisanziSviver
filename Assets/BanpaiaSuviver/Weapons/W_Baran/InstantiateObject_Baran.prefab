@@ -51,6 +51,7 @@ MonoBehaviour:
   _speed: 6
   _number: 1
   _addPower: 8
+  _moveSpeed: 5
   _randamX: 2
 --- !u!82 &-5565983322129260905
 AudioSource:
@@ -61,7 +62,7 @@ AudioSource:
   m_GameObject: {fileID: 5218946965923160580}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4595327444794445418, guid: ae1dbe8ee4d42b341916ce3e352399b5, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1

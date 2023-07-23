@@ -8,6 +8,8 @@ public class ItemManager : MonoBehaviour
     [Header("ゲーム内でつかう武器")]
     [SerializeField] private List<ScritableItem> _useItems = new List<ScritableItem>();
 
+    [SerializeField] private DebugMaker debugMaker;
+
     /// <summary>現在使っているアイテムの名前</summary>
     private List<string> _onUseItems = new List<string>();
     /// <summary>アイテムの名前</summary>
@@ -26,6 +28,7 @@ public class ItemManager : MonoBehaviour
     [SerializeField] private MainStatas _mainStatas;
     [SerializeField] private CanvasManager _canvasManager;
     [SerializeField] private GameManager _gameManager;
+    [SerializeField] private UIMaker _uIMaker;
 
     public ItemData ItemData => _itemData;
 
@@ -58,28 +61,24 @@ public class ItemManager : MonoBehaviour
         itemBase.BoxControl = _boxControl;
         itemBase.LevelUpController = _levelUpController;
 
-        //ボタンの設定
-        var panel = Instantiate(item.LevelUpButtun);
-        panel.TryGetComponent<Button>(out Button button);
-        panel.transform.SetParent(_canvasManager.OrizinCanvus);
-        //武器のレベルアップの処理をボタンに登録
-        button.onClick.AddListener(itemBase.LevelUp);
-        //レベルアップ終了の処理をボタンに登録
-        button.onClick.AddListener(_levelUpController.EndLevelUp);
+        //選択肢のパネルの登録
+        _uIMaker.PanelMake(item.ItemName,item.ItemSprite);
+        _uIMaker.Panel[item.ItemName].TryGetComponent<Button>(out Button button);
+        button.onClick.AddListener(itemBase.LevelUp); //武器のレベルアップの処理をボタンに登録  
+        button.onClick.AddListener(_levelUpController.EndLevelUp); //レベルアップ終了の処理をボタンに登録
 
-        panel.SetActive(false);
+        var debug = Instantiate(debugMaker._buttun);
+        debug.transform.SetParent(debugMaker._itemLayoutGroup.transform);
+        debug.onClick.AddListener(itemBase.LevelUpDebugButtun);
+        debug.transform.GetChild(0).GetComponent<Text>().text = item.ItemName;
 
-        //Box用のIconを設定
-        var boxIcon = Instantiate(item.IconUseBox);
-        boxIcon.transform.SetParent(_boxControl.IconParentObject);
 
-        //UI用のアイコンを生成
-        var icon = Instantiate(item.IconUseUI);
 
-        //アイコンの設定
-        _canvasManager.NameOfIconPanelUseBox.Add(item.ItemName, boxIcon);
-        _canvasManager.NameOfIconPanelUseUI.Add(item.ItemName, icon);
-        _canvasManager.NameOfInformationPanel.Add(item.ItemName, panel);
+        //Box用のアイコンを生成
+        _uIMaker.BoxIconMake(item.ItemName, item.ItemSprite);
+
+        //UI用のアイコンを作成
+        _uIMaker.UIIconMake(item.ItemName, item.ItemSprite);
 
         _levelUpController.SetItemData(item.ItemName, item.MaxLevel);
         _boxControl.SetItem(item.ItemName, itemBase);

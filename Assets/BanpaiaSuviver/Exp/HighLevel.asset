@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 393b18c212ea5f844acb78eec8622319, type: 3}
   m_Name: HighLevel
   m_EditorClassIdentifier: 
-  _expPoint: 50
+  _expPoint: 200

@@ -15,5 +15,5 @@ MonoBehaviour:
   data:
   - Name: Nomal
     textType: 0
-    objectPrefab: {fileID: 2825850660752910158, guid: 2fb28ae215d310543876c97afc9a1a6d, type: 3}
+    objectPrefab: {fileID: 8175615026911549017, guid: bf283bad8594fd24e834e0d2ee4029d1, type: 3}
     objectMaxCount: 100

@@ -149,6 +149,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lifeTime: 5
   _isActiveFalse: 1
+  _anims:
+  - {fileID: 943006984}
 --- !u!95 &943006984
 Animator:
   serializedVersion: 4

@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Linq;
 using System;
 using UnityEngine.UI;
-
+using TMPro;
 public class DamageTextPool : MonoBehaviour
 {
     [SerializeField]
@@ -66,7 +66,7 @@ public class DamageTextPool : MonoBehaviour
             if (pool.Object.activeSelf == false && pool.Type == objectType)
             {
                 pool.Object.SetActive(true);
-                pool.Object.transform.GetChild(0).GetComponent<Text>().text = damage.ToString();
+                pool.Object.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = damage.ToString();
 
                 pool.Object.transform.position = position;
 

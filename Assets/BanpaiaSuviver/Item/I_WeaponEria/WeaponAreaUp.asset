@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7fa4aefe85b3434587ab89a50fcc490, type: 3}
   m_Name: WeaponAreaUp
   m_EditorClassIdentifier: 
-  _itemName: 
-  _maxLevel: 5
-  _itemPrefab: {fileID: 0}
-  _iconUseBox: {fileID: 0}
-  _iconUseUI: {fileID: 0}
-  _panel: {fileID: 0}
+  _itemName: "\u604B\u30D0\u30CA\u914D\u4FE1"
+  _maxLevel: 3
+  _statasTextAssets: {fileID: 4900000, guid: 7727b9b401d17964b961a360f41afb0b, type: 3}
+  _infoTextAssets: {fileID: 4900000, guid: 4be4e63e70682bf4ca78f7064cb068b2, type: 3}
+  _itemPrefab: {fileID: 4094426201105566434, guid: a1a673f849b1d874cae7b31dc99a5adf, type: 3}
+  _sprite: {fileID: 21300000, guid: bd380437667aaba4280045579067e4d6, type: 3}

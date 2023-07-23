@@ -7,6 +7,9 @@ public class InstantiateSlash : InstantiateWeaponBase
     [Header("Slashのオブジェクト")]
     [SerializeField] private GameObject _slshObj;
 
+    [Header("進化した時のオブジェクト")]
+    [SerializeField] private GameObject _evolutionObj;
+
     private GameObject _slash;
 
     private GameObject _slashParent;
@@ -51,6 +54,15 @@ public class InstantiateSlash : InstantiateWeaponBase
                 _dirSave = new Vector2(h, v);
             }
         }
+    }
+
+    public override void SetEvolutionSystem()
+    {
+        var go = Instantiate(_evolutionObj);
+        go.transform.SetParent(_player.transform);
+        go.transform.localPosition = Vector2.zero;
+        go.TryGetComponent<EvolutionSlash>(out EvolutionSlash slash);
+       // slash.PauseManager = _pauseManager;
     }
 
     /// <summary>クールタイムの処理</summary>
